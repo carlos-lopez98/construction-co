@@ -220,20 +220,45 @@ RIGHT JOIN Project_Equipment ON Purchase_Order.purchase_order_id = Project_Equip
 SELECT * FROM Materials
 RIGHT JOIN Purchase_Order_Materials ON Materials.material_id = Purchase_Order_Materials.material_id;
 
-SELECT Contractors.contractor_id, Contractors.contractor_name, Purchase_Order.purchaseorder_name FROM Contractors
-INNER JOIN Purchase_Order ON Contractors.contractor_id = Purchase_Order.contractor_id;
-SELECT Customers.customer_id, Customers.customer_name, Invoices.due_date FROM Customers
-INNER JOIN Invoices ON Customers.customer_id = Invoices.customer_id;
-SELECT Employees.employee_id, Employees.first_name, Employee_Tasks.due_date FROM Employees
+SELECT contractor_id, Contractors.contractor_name, Purchase_Order.purchaseorder_name FROM Contractors
+INNER JOIN Purchase_Order ON contractor_id = Purchase_Order.contractor_id;
+SELECT customer_id, customer_name, Invoices.due_date FROM Customers
+INNER JOIN Invoices ON customer_id = Invoices.customer_id;
+SELECT employee_id, first_name, Employee_Tasks.due_date FROM Employees
 INNER JOIN Employee_Tasks ON Employees.employee_id = Employee_Tasks.employee_id;
 SELECT Purchase_Order.purchase_order_id, Project_Equipment.equipment_id FROM Purchase_Order
 INNER JOIN Project_Equipment ON Purchase_Order.purchase_order_id = Project_Equipment.purchase_order_id;
-SELECT Materials.material_id, Purchase_Order_Materials.purchase_order_id FROM Materials
+SELECT material_id, purchase_order_id FROM Materials
 INNER JOIN Purchase_Order_Materials ON Materials.material_id = Purchase_Order_Materials.material_id;
 
-SELECT Customers.customer_id, Invoices.invoice_id FROM Customers
+SELECT customer_id, Invoices.invoice_id FROM Customers
 LEFT JOIN Invoices ON Customers.customer_id = Invoices.customer_id;
-SELECT Equipment.equipment_id, Project_Equipment.purchase_order_id FROM Equipment
+SELECT equipment_id, Project_Equipment.purchase_order_id FROM Equipment
 RIGHT JOIN Project_Equipment ON Equipment.equipment_id = Project_Equipment.equipment_id;
-SELECT Contractors.contractor_id, Purchase_Order.purchase_order_id FROM Contractors
-FULL OUTER JOIN Purchase_Order ON Contractors.contractor_id = Purchase_Order.contractor_id;
+SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
+LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
+SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
+RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
+SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
+LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
+-- Joins both select statements --
+UNION
+SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
+RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
+WHERE C.contractor_id IS NULL;
+
+SELECT COUNT(*) FROM Contractors GROUP BY contractor_id;
+SELECT SUM(budget) FROM Purchase_Order GROUP BY status;
+SELECT AVG(total_due) FROM Invoices GROUP BY contractor_id;
+SELECT MIN(budget) FROM Purchase_Order GROUP BY status;
+SELECT MAX(budget) FROM Purchase_Order GROUP BY status;
+SELECT GROUP_CONCAT(contractor_name) FROM Contractors GROUP BY email;
+SELECT STD(price_per_unit) FROM Materials GROUP BY material_id;
+
+SELECT COUNT(*) FROM Contractors GROUP BY contractor_id HAVING COUNT(*) > 5;
+SELECT SUM(budget) FROM Purchase_Order GROUP BY status HAVING SUM(budget) > 10000;
+SELECT AVG(total_due) FROM Invoices GROUP BY contractor_id HAVING AVG(total_due) > 5000;
+SELECT MIN(budget) FROM Purchase_Order GROUP BY status HAVING MIN(budget) > 5000;
+SELECT MAX(budget) FROM Purchase_Order GROUP BY status HAVING MAX(budget) < 10000;
+SELECT GROUP_CONCAT(contractor_name) FROM Contractors GROUP BY email HAVING COUNT(*) > 1;
+SELECT STD(price_per_unit) FROM Materials GROUP BY material_id HAVING STD(price_per_unit) > 10;
