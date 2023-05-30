@@ -231,6 +231,7 @@ INNER JOIN Project_Equipment ON Purchase_Order.purchase_order_id = Project_Equip
 SELECT material_id, purchase_order_id FROM Materials
 INNER JOIN Purchase_Order_Materials ON Materials.material_id = Purchase_Order_Materials.material_id;
 
+----------------------------------------------------------------------------------------------------------
 SELECT customer_id, Invoices.invoice_id FROM Customers
     LEFT JOIN Invoices ON Customers.customer_id = Invoices.customer_id;
 
@@ -250,27 +251,47 @@ SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
     SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
     RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
     WHERE C.contractor_id IS NULL;
+-------------------------------------------------------------------------------------------------------
 
 SELECT COUNT(*) FROM Contractors
        GROUP BY contractor_id;
 
 SELECT SUM(budget) FROM Purchase_Order
        GROUP BY status;
+
 SELECT AVG(total_due) FROM Invoices
        GROUP BY contractor_id;
+
 SELECT MIN(budget) FROM Purchase_Order
        GROUP BY status;
+
 SELECT MAX(budget) FROM Purchase_Order
        GROUP BY status;
+
 SELECT GROUP_CONCAT(contractor_name) FROM Contractors
        GROUP BY email;
+
 SELECT STD(price_per_unit) FROM Materials
        GROUP BY material_id;
+---------------------------------------------------------------
 
-SELECT COUNT(*) FROM Contractors GROUP BY contractor_id HAVING COUNT(*) > 5;
-SELECT SUM(budget) FROM Purchase_Order GROUP BY status HAVING SUM(budget) > 10000;
-SELECT AVG(total_due) FROM Invoices GROUP BY contractor_id HAVING AVG(total_due) > 5000;
-SELECT MIN(budget) FROM Purchase_Order GROUP BY status HAVING MIN(budget) > 5000;
-SELECT MAX(budget) FROM Purchase_Order GROUP BY status HAVING MAX(budget) < 10000;
-SELECT GROUP_CONCAT(contractor_name) FROM Contractors GROUP BY email HAVING COUNT(*) > 1;
-SELECT STD(price_per_unit) FROM Materials GROUP BY material_id HAVING STD(price_per_unit) > 10;
+SELECT COUNT(*) FROM Contractors
+       GROUP BY contractor_id HAVING COUNT(*) > 5;
+
+SELECT SUM(budget) FROM Purchase_Order
+       GROUP BY status HAVING SUM(budget) > 10000;
+
+SELECT AVG(total_due) FROM Invoices
+       GROUP BY contractor_id HAVING AVG(total_due) > 5000;
+
+SELECT MIN(budget) FROM Purchase_Order
+       GROUP BY status HAVING MIN(budget) > 5000;
+
+SELECT MAX(budget) FROM Purchase_Order
+       GROUP BY status HAVING MAX(budget) < 10000;
+
+SELECT GROUP_CONCAT(contractor_name) FROM Contractors
+       GROUP BY email HAVING COUNT(*) > 1;
+
+SELECT STD(price_per_unit) FROM Materials
+       GROUP BY material_id HAVING STD(price_per_unit) > 10;
