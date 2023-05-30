@@ -1,5 +1,5 @@
-/.idea/
-/out/
-/target/
-/.gitignore/
-/contruction-co.iml/
+.idea
+out
+target
+.gitignore
+contruction-co.iml
