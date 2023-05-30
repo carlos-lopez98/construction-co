@@ -232,28 +232,40 @@ SELECT material_id, purchase_order_id FROM Materials
 INNER JOIN Purchase_Order_Materials ON Materials.material_id = Purchase_Order_Materials.material_id;
 
 SELECT customer_id, Invoices.invoice_id FROM Customers
-LEFT JOIN Invoices ON Customers.customer_id = Invoices.customer_id;
-SELECT equipment_id, Project_Equipment.purchase_order_id FROM Equipment
-RIGHT JOIN Project_Equipment ON Equipment.equipment_id = Project_Equipment.equipment_id;
-SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
-LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
-SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
-RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
-SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
-LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
--- Joins both select statements --
-UNION
-SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
-RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
-WHERE C.contractor_id IS NULL;
+    LEFT JOIN Invoices ON Customers.customer_id = Invoices.customer_id;
 
-SELECT COUNT(*) FROM Contractors GROUP BY contractor_id;
-SELECT SUM(budget) FROM Purchase_Order GROUP BY status;
-SELECT AVG(total_due) FROM Invoices GROUP BY contractor_id;
-SELECT MIN(budget) FROM Purchase_Order GROUP BY status;
-SELECT MAX(budget) FROM Purchase_Order GROUP BY status;
-SELECT GROUP_CONCAT(contractor_name) FROM Contractors GROUP BY email;
-SELECT STD(price_per_unit) FROM Materials GROUP BY material_id;
+SELECT equipment_id, Project_Equipment.purchase_order_id FROM Equipment
+    RIGHT JOIN Project_Equipment ON Equipment.equipment_id = Project_Equipment.equipment_id;
+
+SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
+    LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
+
+SELECT C.contractor_id, PO.purchase_order_id FROM Contractors C
+    RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id;
+
+SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
+    LEFT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
+    -- Joins both select statements --
+    UNION
+    SELECT C.contractor_name, PO.purchaseorder_name FROM Contractors C
+    RIGHT JOIN Purchase_Order PO ON C.contractor_id = PO.contractor_id
+    WHERE C.contractor_id IS NULL;
+
+SELECT COUNT(*) FROM Contractors
+       GROUP BY contractor_id;
+
+SELECT SUM(budget) FROM Purchase_Order
+       GROUP BY status;
+SELECT AVG(total_due) FROM Invoices
+       GROUP BY contractor_id;
+SELECT MIN(budget) FROM Purchase_Order
+       GROUP BY status;
+SELECT MAX(budget) FROM Purchase_Order
+       GROUP BY status;
+SELECT GROUP_CONCAT(contractor_name) FROM Contractors
+       GROUP BY email;
+SELECT STD(price_per_unit) FROM Materials
+       GROUP BY material_id;
 
 SELECT COUNT(*) FROM Contractors GROUP BY contractor_id HAVING COUNT(*) > 5;
 SELECT SUM(budget) FROM Purchase_Order GROUP BY status HAVING SUM(budget) > 10000;
