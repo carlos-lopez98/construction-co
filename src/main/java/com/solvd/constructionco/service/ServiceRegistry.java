@@ -6,14 +6,13 @@ import com.solvd.constructionco.exceptions.ServiceNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+/*Creates a way to bundle my services into a single class*/
 public class ServiceRegistry {
 
 
-    Map<Class<?>, Object> services = new HashMap<Class<?>, Object>;
-
+    private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
 
     public void registerService(Object object){
-
         if(services.containsKey(object.getClass())){
           throw new ServiceAlreadyInRegistry("Service is already instantiated, please call ServiceRegistry.getService()");
         }else{
@@ -28,6 +27,6 @@ public class ServiceRegistry {
         }else{
             throw new ServiceNotFoundException("Service has not been registered, please add to registry");
         }
-
     }
+
 }
