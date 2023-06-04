@@ -5,6 +5,7 @@ import com.solvd.constructionco.interfaces.ConstructionDAO;
 import java.util.List;
 
 public class TaskDAO implements ConstructionDAO {
+
     @Override
     public Object getById(Object o) {
         return null;
