@@ -1,32 +1,41 @@
 package com.solvd.constructionco.service.services;
 
+import com.solvd.constructionco.dao.SupplierDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
+import com.solvd.constructionco.models.Supplier;
 
 import java.util.List;
 
-public class SupplierService implements ConstructionServiceOperations {
-    @Override
-    public Object getById(Object o) {
-        return null;
+public class SupplierService implements ConstructionServiceOperations<Supplier, Integer> {
+
+    private SupplierDAO supplierDAO;
+
+    public SupplierService(SupplierDAO supplierDAO) {
+        this.supplierDAO = supplierDAO;
     }
 
     @Override
-    public void save(Object entity) {
-
+    public Supplier getById(Integer supplierID) {
+        return supplierDAO.getById(supplierID);
     }
 
     @Override
-    public void update(Object entity) {
-
+    public void save(Supplier supplier) {
+        supplierDAO.save(supplier);
     }
 
     @Override
-    public void delete(Object o) {
+    public void update(Supplier supplier) {
+        supplierDAO.update(supplier);
+    }
 
+    @Override
+    public void delete(Integer supplierID) {
+        supplierDAO.delete(supplierID);
     }
 
     @Override
     public List getAll() {
-        return null;
+        return supplierDAO.getAll();
     }
 }
