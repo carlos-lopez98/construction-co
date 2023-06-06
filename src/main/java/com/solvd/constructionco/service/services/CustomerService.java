@@ -1,32 +1,42 @@
 package com.solvd.constructionco.service.services;
 
+import com.solvd.constructionco.dao.CustomerDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
+import com.solvd.constructionco.models.Customer;
 
 import java.util.List;
 
-public class CustomerService implements ConstructionServiceOperations {
-    @Override
-    public Object getById(Object o) {
-        return null;
+public class CustomerService implements ConstructionServiceOperations<Customer, Integer> {
+
+
+    private CustomerDAO customerDAO;
+
+    public CustomerService(CustomerDAO customerDAO){
+        this.customerDAO = customerDAO;
     }
 
     @Override
-    public void save(Object entity) {
-
+    public Customer getById(Integer integer) {
+        return customerDAO.getById(integer);
     }
 
     @Override
-    public void update(Object entity) {
-
+    public void save(Customer customer) {
+            customerDAO.save(customer);
     }
 
     @Override
-    public void delete(Object o) {
+    public void update(Customer customer) {
+        customerDAO.update(customer);
+    }
 
+    @Override
+    public void delete(Integer customerID) {
+        customerDAO.delete(customerID);
     }
 
     @Override
     public List getAll() {
-        return null;
+        return customerDAO.getAll();
     }
 }
