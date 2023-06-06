@@ -1,6 +1,7 @@
 package com.solvd.constructionco;
 
 import com.solvd.constructionco.dao.*;
+import com.solvd.constructionco.interfaces.ConstructionDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;
@@ -12,15 +13,15 @@ public class Main {
     public static void main(String args[]){
 
         //Initialize all DAOs
-        ContractorDAO contractorDAO = new ContractorDAO();
-        CustomerDAO customerDAO = new CustomerDAO();
-        EmployeeDAO employeeDAO = new EmployeeDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
-        InvoiceDAO invoiceDAO = new InvoiceDAO();
-        MaterialDAO materialDAO = new MaterialDAO();
-        ProjectDAO projectDAO = new ProjectDAO();
-        SupplierDAO supplierDAO = new SupplierDAO();
-        TaskDAO taskDao = new TaskDAO();
+        ConstructionDAO<Contractor, Integer> contractorDAO = new ContractorDAO();
+        ConstructionDAO<Customer, Integer> customerDAO = new CustomerDAO();
+        ConstructionDAO<Employee, Integer> employeeDAO = new EmployeeDAO();
+        ConstructionDAO<Equipment, Integer> equipmentDAO = new EquipmentDAO();
+        ConstructionDAO<Invoice, Integer> invoiceDAO = new InvoiceDAO();
+        ConstructionDAO<Material, Integer> materialDAO = new MaterialDAO();
+        ConstructionDAO<Project, Integer> projectDAO = new ProjectDAO();
+        ConstructionDAO<Supplier, Integer> supplierDAO = new SupplierDAO();
+        ConstructionDAO<Task, Integer> taskDao = new TaskDAO();
 
         //Initialize Services
         ConstructionServiceOperations<Contractor, Integer> contractorService = new ContractorService(contractorDAO);
