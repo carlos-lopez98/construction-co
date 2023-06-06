@@ -30,12 +30,10 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
   `due_date` DATE NULL,
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`task_id`, `employee_id`),
-  CONSTRAINT `fk_employee_tasks_task_id`
     FOREIGN KEY (`task_id`)
     REFERENCES `ConstructionCo`.`Tasks` (`task_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_employee_tasks_employee_id`
     FOREIGN KEY (`employee_id`)
     REFERENCES `ConstructionCo`.`Employees` (`employee_id`)
     ON DELETE NO ACTION
@@ -65,17 +63,14 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
   `due_date` DATE NULL,
   `total_due` INT NULL,
   PRIMARY KEY (`invoice_id`),
-  CONSTRAINT `fk_invoices_purchase_order`
     FOREIGN KEY (`invoice_id`)
     REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_invoices_customer`
     FOREIGN KEY (`customer_id`)
     REFERENCES `ConstructionCo`.`Customers` (`customer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_invoices_contractor`
     FOREIGN KEY (`contractor_id`)
     REFERENCES `ConstructionCo`.`Contractors` (`contractor_id`)
     ON DELETE NO ACTION
@@ -88,7 +83,6 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
   `description` VARCHAR(45) NULL,
   `price_per_unit` VARCHAR(45) NULL,
   PRIMARY KEY (`material_id`),
-  CONSTRAINT `supplier_id`
     FOREIGN KEY (`material_id`)
     REFERENCES `ConstructionCo`.`Suppliers` (`supplier_id`)
     ON DELETE NO ACTION
@@ -99,12 +93,10 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
   `equipment_id` INT NOT NULL,
   PRIMARY KEY (`purchase_order_id`, `equipment_id`),
   INDEX `equipment_id_idx` (`equipment_id` ASC) VISIBLE,
-  CONSTRAINT `fk_purchase_order_id_project_equipment`
     FOREIGN KEY (`purchase_order_id`)
     REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_equipment_id_project_equipment`
     FOREIGN KEY (`equipment_id`)
     REFERENCES `ConstructionCo`.`Equipment` (`equipment_id`)
     ON DELETE NO ACTION
@@ -115,12 +107,10 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
   `material_id` INT NOT NULL,
   PRIMARY KEY (`purchase_order_id`, `material_id`),
   INDEX `material_id_idx` (`material_id` ASC) VISIBLE,
-  CONSTRAINT `fk_purchase_order_id_materials`
     FOREIGN KEY (`purchase_order_id`)
     REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_material_id_purchase_order_materials`
     FOREIGN KEY (`material_id`)
     REFERENCES `ConstructionCo`.`Materials` (`material_id`)
     ON DELETE NO ACTION
@@ -139,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Tasks` (
   `status` VARCHAR(45) NULL,
   `due_date` DATE NULL,
   PRIMARY KEY (`task_id`),
-  CONSTRAINT `purchase_order_id`
     FOREIGN KEY (`task_id`)
     REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
     ON DELETE NO ACTION

@@ -3,6 +3,7 @@ package com.solvd.constructionco;
 import com.solvd.constructionco.dao.*;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.*;
+import com.solvd.constructionco.service.ConstructionService;
 import com.solvd.constructionco.service.ServiceRegistry;
 import com.solvd.constructionco.service.services.*;
 
@@ -43,6 +44,8 @@ public class Main {
         serviceRegistry.registerService(projectService);
         serviceRegistry.registerService(supplierService);
         serviceRegistry.registerService(taskService);
+
+        ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
 
 
