@@ -48,7 +48,5 @@ public class Main {
 
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
-
-
     }
 }

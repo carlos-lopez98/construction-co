@@ -6,6 +6,8 @@ import com.solvd.constructionco.models.Contractor;
 
 import java.util.List;
 
+//Do the validation/ input data null checks in here
+
 public class ContractorService implements ConstructionServiceOperations<Contractor, Integer> {
 
     private ContractorDAO contractorDAO;
