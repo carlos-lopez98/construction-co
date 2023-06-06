@@ -16,27 +16,27 @@ public class TaskService implements ConstructionServiceOperations<Task, Integer>
 
 
     @Override
-    public Task getById(Integer integer) {
-        return null;
+    public Task getById(Integer taskID) {
+        return taskDAO.getById(taskID);
     }
 
     @Override
-    public void save(Task entity) {
-
+    public void save(Task task) {
+        taskDAO.save(task);
     }
 
     @Override
-    public void update(Task entity) {
-
+    public void update(Task task) {
+        taskDAO.update(task);
     }
 
     @Override
-    public void delete(Integer integer) {
-
+    public void delete(Integer taskID) {
+        taskDAO.delete(taskID);
     }
 
     @Override
     public List<Task> getAll() {
-        return null;
+        return taskDAO.getAll();
     }
 }
