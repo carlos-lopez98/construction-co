@@ -1,32 +1,41 @@
 package com.solvd.constructionco.service.services;
 
+import com.solvd.constructionco.dao.EquipmentDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
+import com.solvd.constructionco.models.Equipment;
 
 import java.util.List;
 
-public class EquipmentService implements ConstructionServiceOperations {
-    @Override
-    public Object getById(Object o) {
-        return null;
+public class EquipmentService implements ConstructionServiceOperations<Equipment, Integer> {
+
+    private EquipmentDAO equipmentDAO;
+
+    public EquipmentService(EquipmentDAO equipmentDAO){
+        this.equipmentDAO = equipmentDAO;
     }
 
     @Override
-    public void save(Object entity) {
-
+    public Equipment getById(Integer equipmentID) {
+        return equipmentDAO.getById(equipmentID);
     }
 
     @Override
-    public void update(Object entity) {
-
+    public void save(Equipment equipment) {
+            equipmentDAO.save(equipment);
     }
 
     @Override
-    public void delete(Object o) {
+    public void update(Equipment equipment) {
+            equipmentDAO.update(equipment);
+    }
 
+    @Override
+    public void delete(Integer equipmentID) {
+        equipmentDAO.delete(equipmentID);
     }
 
     @Override
     public List getAll() {
-        return null;
+        return equipmentDAO.getAll();
     }
 }
