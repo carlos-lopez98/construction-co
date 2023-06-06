@@ -1,32 +1,61 @@
 package com.solvd.constructionco.dao;
 
 import com.solvd.constructionco.interfaces.ConstructionDAO;
+import com.solvd.constructionco.models.Employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDAO implements ConstructionDAO {
+public class EmployeeDAO implements ConstructionDAO<Employee, Integer> {
+
+    private List<Employee> employees;
+
+    public EmployeeDAO() {
+        employees = new ArrayList<>();
+    }
+
     @Override
-    public Object getById(Object o) {
+    public Employee getById(Integer id) {
+        for (Employee employee : employees) {
+            if (employee.getEmployeeId() == id) {
+                return employee;
+            }
+        }
         return null;
     }
 
     @Override
-    public void save(Object entity) {
-
+    public void save(Employee entity) {
+        employees.add(entity);
     }
 
     @Override
-    public void update(Object entity) {
-
+    public void update(Employee entity) {
+        Employee existingEmployee = getById(entity.getEmployeeId());
+        if (existingEmployee != null) {
+            existingEmployee.setEmployeeName(entity.getEmployeeName());
+            existingEmployee.setEmail(entity.getEmail());
+            existingEmployee.setPhoneNumber(entity.getPhoneNumber());
+            existingEmployee.setHireDate(entity.getHireDate());
+            existingEmployee.setPosition(entity.getPosition());
+        }
     }
 
     @Override
-    public void delete(Object o) {
-
+    public void delete(Integer id) {
+        Employee employeeToRemove = getById(id);
+        if (employeeToRemove != null) {
+            employees.remove(employeeToRemove);
+        }
     }
 
     @Override
-    public List getAll() {
-        return null;
+    public List<Employee> getAll() {
+        return employees;
     }
 }
+
+
+
+
+
