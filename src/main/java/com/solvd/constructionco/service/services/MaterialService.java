@@ -1,10 +1,11 @@
 package com.solvd.constructionco.service.services;
 
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
+import com.solvd.constructionco.models.Material;
 
 import java.util.List;
 
-public class MaterialService implements ConstructionServiceOperations {
+public class MaterialService implements ConstructionServiceOperations<Material, Integer> {
     @Override
     public Object getById(Object o) {
         return null;
