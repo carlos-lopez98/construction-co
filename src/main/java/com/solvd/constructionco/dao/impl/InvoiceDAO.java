@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iInvoiceDAO;
 import com.solvd.constructionco.models.Invoice;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceDAO implements ConstructionDAO<Invoice, Integer> {
+public class InvoiceDAO implements iInvoiceDAO<Invoice, Integer> {
 
     private List<Invoice> invoices;
 
