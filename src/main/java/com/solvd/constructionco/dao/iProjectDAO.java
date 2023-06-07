@@ -1,4 +1,23 @@
 package com.solvd.constructionco.dao;
 
-public interface iProjectDAO {
+import com.solvd.constructionco.models.Project;
+
+import java.util.List;
+
+public interface iProjectDAO extends ConstructionDAO<Project, Integer>{
+
+    @Override
+    Project getById(Integer purchaseOrderID);
+
+    @Override
+    void save(Project project);
+
+    @Override
+    void update(Project project);
+
+    @Override
+    void delete(Integer purchaseOrderID);
+
+    @Override
+    List<Project> getAll();
 }
