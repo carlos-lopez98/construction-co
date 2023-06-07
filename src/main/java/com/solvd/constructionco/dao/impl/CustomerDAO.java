@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iCustomerDAO;
 import com.solvd.constructionco.models.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO implements ConstructionDAO<Customer, Integer> {
+public class CustomerDAO implements iCustomerDAO<Customer, Integer> {
 
     private List<Customer> customers;
 

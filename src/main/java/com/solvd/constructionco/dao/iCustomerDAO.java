@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Customer;
 
 import java.util.List;
 
-public interface iCustomerDAO extends ConstructionDAO<Customer, Integer> {
+public interface iCustomerDAO<Customer, Integer> extends ConstructionDAO<Customer, Integer> {
 
     @Override
     Customer getById(Integer customerID);
