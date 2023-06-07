@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Task;
 
 import java.util.List;
 
-public interface iTaskDAO extends ConstructionDAO<Task, Integer>{
+public interface iTaskDAO<Task, Integer> extends ConstructionDAO<Task, Integer>{
 
     @Override
     Task getById(Integer taskID);

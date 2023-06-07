@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iTaskDAO;
 import com.solvd.constructionco.models.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDAO implements ConstructionDAO<Task, Integer> {
+public class TaskDAO implements iTaskDAO<Task, Integer> {
     private List<Task> tasks;
 
     public TaskDAO() {
