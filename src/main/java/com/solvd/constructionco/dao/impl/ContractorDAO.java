@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iContractorDAO;
 import com.solvd.constructionco.models.Contractor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContractorDAO implements ConstructionDAO<Contractor, Integer> {
+public class ContractorDAO implements iContractorDAO<Contractor, Integer> {
 
 
     private List<Contractor> contractors;
@@ -16,9 +17,9 @@ public class ContractorDAO implements ConstructionDAO<Contractor, Integer> {
     }
 
     @Override
-    public Contractor getById(Integer id) {
+    public Contractor getById(Integer contractorID) {
         for (Contractor contractor : contractors) {
-            if (contractor.getContractorId() == id) {
+            if (contractor.getContractorId() == contractorID) {
                 return contractor;
             }
         }
@@ -42,8 +43,8 @@ public class ContractorDAO implements ConstructionDAO<Contractor, Integer> {
     }
 
     @Override
-    public void delete(Integer id) {
-        Contractor contractorToRemove = getById(id);
+    public void delete(Integer contractorID) {
+        Contractor contractorToRemove = getById(contractorID);
         if (contractorToRemove != null) {
             contractors.remove(contractorToRemove);
         }
