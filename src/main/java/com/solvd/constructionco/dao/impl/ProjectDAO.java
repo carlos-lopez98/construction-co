@@ -1,6 +1,6 @@
-package com.solvd.constructionco.dao;
+package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.interfaces.ConstructionDAO;
+import com.solvd.constructionco.dao.ConstructionDAO;
 import com.solvd.constructionco.models.Project;
 
 import java.util.ArrayList;

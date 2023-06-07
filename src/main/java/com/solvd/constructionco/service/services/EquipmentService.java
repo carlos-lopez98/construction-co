@@ -1,6 +1,6 @@
 package com.solvd.constructionco.service.services;
 
-import com.solvd.constructionco.dao.EquipmentDAO;
+import com.solvd.constructionco.dao.impl.EquipmentDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Equipment;
 

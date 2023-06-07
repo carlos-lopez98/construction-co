@@ -1,7 +1,7 @@
 package com.solvd.constructionco;
 
-import com.solvd.constructionco.dao.*;
-import com.solvd.constructionco.interfaces.ConstructionDAO;
+import com.solvd.constructionco.dao.impl.*;
+import com.solvd.constructionco.dao.ConstructionDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;

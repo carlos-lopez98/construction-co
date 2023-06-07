@@ -1,4 +1,4 @@
-package com.solvd.constructionco.interfaces;
+package com.solvd.constructionco.dao;
 
 
 import java.util.List;

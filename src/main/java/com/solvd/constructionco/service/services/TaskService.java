@@ -1,6 +1,6 @@
 package com.solvd.constructionco.service.services;
 
-import com.solvd.constructionco.dao.TaskDAO;
+import com.solvd.constructionco.dao.impl.TaskDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Task;
 

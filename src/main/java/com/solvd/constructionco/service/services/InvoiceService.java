@@ -1,6 +1,6 @@
 package com.solvd.constructionco.service.services;
 
-import com.solvd.constructionco.dao.InvoiceDAO;
+import com.solvd.constructionco.dao.impl.InvoiceDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Invoice;
 
