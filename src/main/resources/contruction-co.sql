@@ -1,138 +1,114 @@
-create database ConstructionCo;
+CREATE DATABASE IF NOT EXISTS ConstructionCo;
 
-CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Contractors` (
-  `contractor_id` INT NOT NULL,
-  `contractor_name` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
-  `phone_number` VARCHAR(45) NULL,
-  `address` VARCHAR(45) NULL,
-  PRIMARY KEY (`contractor_id`)
+USE ConstructionCo;
+
+CREATE TABLE IF NOT EXISTS Contractors (
+  contractor_id INT NOT NULL,
+  contractor_name VARCHAR(45),
+  email VARCHAR(45),
+  phone_number VARCHAR(45),
+  address VARCHAR(45),
+  PRIMARY KEY (contractor_id)
 );
 
-CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Purchase_Order` (
-  `purchase_order_id` INT NOT NULL,
-  `purchaseorder_name` VARCHAR(50) NULL,
-  `budget` INT NULL,
-  `status` VARCHAR(45) NULL,
-  PRIMARY KEY (`purchase_order_id`));
+CREATE TABLE IF NOT EXISTS Purchase_Order (
+  purchase_order_id INT NOT NULL,
+  purchase_order_name VARCHAR(50),
+  budget INT,
+  status VARCHAR(45),
+  PRIMARY KEY (purchase_order_id)
+);
 
-CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Customers` (
-  `customer_id` INT NOT NULL,
-  `customer_name` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
-  `phone_number` VARCHAR(45) NULL,
-  `address` VARCHAR(45) NULL,
-  PRIMARY KEY (`customer_id`));
-  
-  CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Employee_Tasks` (
-  `task_id` INT NOT NULL,
-  `employee_id` INT NOT NULL,
-  `due_date` DATE NULL,
-  `status` VARCHAR(45) NULL,
-  PRIMARY KEY (`task_id`, `employee_id`),
-    FOREIGN KEY (`task_id`)
-    REFERENCES `ConstructionCo`.`Tasks` (`task_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (`employee_id`)
-    REFERENCES `ConstructionCo`.`Employees` (`employee_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Employees` (
-  `employee_id` INT NOT NULL,
-  `first_name` VARCHAR(50) NULL,
-  `last_name` VARCHAR(50) NULL,
-  `email` VARCHAR(45) NULL,
-  `phone_number` VARCHAR(10) NULL,
-  `hire_date` VARCHAR(45) NULL,
-  `position` VARCHAR(45) NULL,
-  PRIMARY KEY (`employee_id`));
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Equipment` (
-  `equipment_id` INT NOT NULL,
-  `equipment_name` VARCHAR(45) NULL,
-  `description` VARCHAR(45) NULL,
-  `status` INT NULL,
-  PRIMARY KEY (`equipment_id`));
-  
-  CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Invoices` (
-  `invoice_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
-  `contractor_id` INT NOT NULL,
-  `due_date` DATE NULL,
-  `total_due` INT NULL,
-  PRIMARY KEY (`invoice_id`),
-    FOREIGN KEY (`invoice_id`)
-    REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `ConstructionCo`.`Customers` (`customer_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (`contractor_id`)
-    REFERENCES `ConstructionCo`.`Contractors` (`contractor_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Materials` (
-  `material_id` INT NOT NULL,
-  `material_name` VARCHAR(45) NULL,
-  `description` VARCHAR(45) NULL,
-  `price_per_unit` VARCHAR(45) NULL,
-  PRIMARY KEY (`material_id`),
-    FOREIGN KEY (`material_id`)
-    REFERENCES `ConstructionCo`.`Suppliers` (`supplier_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Project_Equipment` (
-  `purchase_order_id` INT NOT NULL,
-  `equipment_id` INT NOT NULL,
-  PRIMARY KEY (`purchase_order_id`, `equipment_id`),
-  INDEX `equipment_id_idx` (`equipment_id` ASC) VISIBLE,
-    FOREIGN KEY (`purchase_order_id`)
-    REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (`equipment_id`)
-    REFERENCES `ConstructionCo`.`Equipment` (`equipment_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Purchase_Order_Materials` (
-  `purchase_order_id` INT NOT NULL,
-  `material_id` INT NOT NULL,
-  PRIMARY KEY (`purchase_order_id`, `material_id`),
-  INDEX `material_id_idx` (`material_id` ASC) VISIBLE,
-    FOREIGN KEY (`purchase_order_id`)
-    REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (`material_id`)
-    REFERENCES `ConstructionCo`.`Materials` (`material_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Suppliers` (
-  `supplier_id` INT NOT NULL,
-  `supplier_name` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
-  PRIMARY KEY (`supplier_id`));
-    
-    
-CREATE TABLE IF NOT EXISTS `ConstructionCo`.`Tasks` (
-  `task_id` INT NOT NULL,
-  `task_name` VARCHAR(45) NULL,
-  `status` VARCHAR(45) NULL,
-  `due_date` DATE NULL,
-  PRIMARY KEY (`task_id`),
-    FOREIGN KEY (`task_id`)
-    REFERENCES `ConstructionCo`.`Purchase_Order` (`purchase_order_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+CREATE TABLE IF NOT EXISTS Customers (
+  customer_id INT NOT NULL,
+  customer_name VARCHAR(45),
+  email VARCHAR(45),
+  phone_number VARCHAR(45),
+  address VARCHAR(45),
+  PRIMARY KEY (customer_id)
+);
+
+CREATE TABLE IF NOT EXISTS Employee_Tasks (
+  task_id INT NOT NULL,
+  employee_id INT NOT NULL,
+  due_date DATE,
+  status VARCHAR(45),
+  PRIMARY KEY (task_id, employee_id),
+  FOREIGN KEY (task_id) REFERENCES Tasks (task_id),
+  FOREIGN KEY (employee_id) REFERENCES Employees (employee_id)
+);
+
+CREATE TABLE IF NOT EXISTS Employees (
+  employee_id INT NOT NULL,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  email VARCHAR(45),
+  phone_number VARCHAR(10),
+  hire_date VARCHAR(45),
+  position VARCHAR(45),
+  PRIMARY KEY (employee_id)
+);
+
+CREATE TABLE IF NOT EXISTS Equipment (
+  equipment_id INT NOT NULL,
+  equipment_name VARCHAR(45),
+  description VARCHAR(45),
+  status INT,
+  PRIMARY KEY (equipment_id)
+);
+
+CREATE TABLE IF NOT EXISTS Invoices (
+  invoice_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  contractor_id INT NOT NULL,
+  due_date DATE,
+  total_due INT,
+  PRIMARY KEY (invoice_id),
+  FOREIGN KEY (invoice_id) REFERENCES Purchase_Order (purchase_order_id),
+  FOREIGN KEY (customer_id) REFERENCES Customers (customer_id),
+  FOREIGN KEY (contractor_id) REFERENCES Contractors (contractor_id)
+);
+
+CREATE TABLE IF NOT EXISTS Materials (
+  material_id INT NOT NULL,
+  material_name VARCHAR(45),
+  description VARCHAR(45),
+  price_per_unit VARCHAR(45),
+  PRIMARY KEY (material_id),
+  FOREIGN KEY (material_id) REFERENCES Suppliers (supplier_id)
+);
+
+CREATE TABLE IF NOT EXISTS Project_Equipment (
+  purchase_order_id INT NOT NULL,
+  equipment_id INT NOT NULL,
+  PRIMARY KEY (purchase_order_id, equipment_id),
+  FOREIGN KEY (purchase_order_id) REFERENCES Purchase_Order (purchase_order_id),
+  FOREIGN KEY (equipment_id) REFERENCES Equipment (equipment_id)
+);
+
+CREATE TABLE IF NOT EXISTS Purchase_Order_Materials (
+  purchase_order_id INT NOT NULL,
+  material_id INT NOT NULL,
+  PRIMARY KEY (purchase_order_id, material_id),
+  FOREIGN KEY (purchase_order_id) REFERENCES Purchase_Order (purchase_order_id),
+  FOREIGN KEY (material_id) REFERENCES Materials (material_id)
+);
+
+CREATE TABLE IF NOT EXISTS Suppliers (
+  supplier_id INT NOT NULL,
+  supplier_name VARCHAR(45),
+  email VARCHAR(45),
+  PRIMARY KEY (supplier_id)
+);
+
+CREATE TABLE IF NOT EXISTS Tasks (
+  task_id INT NOT NULL,
+  task_name VARCHAR(45),
+  status VARCHAR(45),
+  due_date DATE,
+  PRIMARY KEY (task_id),
+  FOREIGN KEY (task_id) REFERENCES Purchase_Order (purchase_order_id)
+);
 ------------------------------------------------------------------------------------------------------------------------
     
 INSERT INTO ConstructionCo.Contractors VALUES (1, 'John Smith', 'johnsmith@gmail.com', '123456789', 'Address 1');
