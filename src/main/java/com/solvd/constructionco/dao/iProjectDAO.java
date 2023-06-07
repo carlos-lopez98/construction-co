@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Project;
 
 import java.util.List;
 
-public interface iProjectDAO extends ConstructionDAO<Project, Integer>{
+public interface iProjectDAO<Project, Integer> extends ConstructionDAO<Project, Integer>{
 
     @Override
     Project getById(Integer purchaseOrderID);
