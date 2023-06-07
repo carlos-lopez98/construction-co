@@ -1,4 +1,4 @@
 target
 contruction-co.iml
 .idea
-database.properties
+src/main/resources/database.properties
