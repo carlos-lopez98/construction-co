@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iSupplierDAO;
 import com.solvd.constructionco.models.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDAO implements ConstructionDAO<Supplier, Integer> {
+public class SupplierDAO implements iSupplierDAO<Supplier, Integer> {
     private List<Supplier> suppliers;
 
     public SupplierDAO() {
