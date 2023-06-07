@@ -1,5 +1,9 @@
 package com.solvd.constructionco.util;
 
+import com.solvd.constructionco.Main;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,73 +16,82 @@ import java.util.Properties;
 
 public class ConnectionPool {
 
-        private static final int POOL_SIZE = 10;
+    private Logger logger = LogManager.getLogger(Main.class);
 
-        private String url;
-        private String username;
-        private String password;
+    private static final int POOL_SIZE = 10;
 
-        private List<Connection> connectionPool;
+    private String url;
+    private String username;
+    private String password;
 
-        //Creates
-        public ConnectionPool() {
-            connectionPool = new ArrayList<>();
-            retrieveProperties();
+    private List<Connection> connectionPool;
 
-            for (int i = 0; i < POOL_SIZE; i++) {
-                try {
-                    Connection connection = createConnection();
-                    connectionPool.add(connection);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+    private static ConnectionPool instance;
+
+    private ConnectionPool() {
+        connectionPool = new ArrayList<>();
+        retrieveProperties();
+
+        for (int i = 0; i < POOL_SIZE; i++) {
+            try {
+                Connection connection = createConnection();
+                connectionPool.add(connection);
+            } catch (SQLException e) {
+                logger.info("SQL Exception occured" + e);
             }
-        }
-
-        private void retrieveProperties() {
-            Properties properties = new Properties();
-            try (FileInputStream fis = new FileInputStream("src/main/resources/database.properties")) {
-                properties.load(fis);
-                url = properties.getProperty("url");
-                username = properties.getProperty("username");
-                password = properties.getProperty("password");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private Connection createConnection() throws SQLException {
-            return DriverManager.getConnection(url, username, password);
-        }
-        //Added a timeout of 5 secs
-        public synchronized Connection getConnection() {
-            long timeout = 5000;
-            long startTime = System.currentTimeMillis();
-            long elapsedTime = 0;
-
-            //Waiting up to 5 secs
-            while (connectionPool.isEmpty() && elapsedTime < timeout) {
-                try {
-                wait(timeout - elapsedTime);
-                } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException("Interrupted while waiting for a connection", e);
-                 }
-            elapsedTime = System.currentTimeMillis() - startTime;
-         }
-
-            if (connectionPool.isEmpty()) {
-                throw new IllegalStateException("Error no connection available after 5 secs");
-            }
-
-            //returns one connection
-            return connectionPool.remove(connectionPool.size() - 1);
-        }
-
-        public void releaseConnection(Connection connection) {
-             connectionPool.add(connection);
         }
     }
+
+    //Get Instance method for lazy initialization
+    public synchronized static ConnectionPool getInstance() {
+        if (instance == null) {
+            instance = new ConnectionPool();
+        }
+        return instance;
+    }
+
+    private void retrieveProperties() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("src/main/resources/database.properties")) {
+            properties.load(fis);
+            url = properties.getProperty("url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+        } catch (FileNotFoundException e) {
+            logger.info("File not found" + e);
+        } catch (IOException e) {
+            logger.info("Input Output Exception Occured" + e);
+        }
+    }
+
+    private Connection createConnection() throws SQLException {
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    public synchronized Connection getConnection() {
+        long timeout = 5000;
+        long startTime = System.currentTimeMillis();
+        long elapsedTime = 0;
+
+        while (connectionPool.isEmpty() && elapsedTime < timeout) {
+            try {
+                wait(timeout - elapsedTime);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException("Interrupted while waiting for a connection", e);
+            }
+            elapsedTime = System.currentTimeMillis() - startTime;
+        }
+
+        if (connectionPool.isEmpty()) {
+            throw new IllegalStateException("Error: No connection available after 5 seconds");
+        }
+
+        return connectionPool.remove(connectionPool.size() - 1);
+    }
+
+    public void releaseConnection(Connection connection) {
+        connectionPool.add(connection);
+    }
+}
 
