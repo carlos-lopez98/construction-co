@@ -1,12 +1,13 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.dao.iMaterialDAO;
 import com.solvd.constructionco.models.Material;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialDAO implements ConstructionDAO<Material, Integer> {
+public class MaterialDAO implements iMaterialDAO<Material, Integer> {
 
     private List<Material> materials;
 
