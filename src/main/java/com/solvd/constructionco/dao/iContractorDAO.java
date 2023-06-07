@@ -7,7 +7,7 @@ import java.util.List;
 public interface iContractorDAO<Contractor, Integer> extends ConstructionDAO<Contractor, Integer>{
 
     @Override
-    Contractor getById(Integer integer);
+    Contractor getById(Integer contractorID);
 
     @Override
     void save(Contractor contractor);
@@ -16,7 +16,7 @@ public interface iContractorDAO<Contractor, Integer> extends ConstructionDAO<Con
     void update(Contractor contractor);
 
     @Override
-    void delete(Integer integer);
+    void delete(Integer contractorID);
 
     @Override
     List<Contractor> getAll();
