@@ -12,6 +12,9 @@ public class ContractorDAO implements iContractorDAO<Contractor, Integer> {
 
     private List<Contractor> contractors;
 
+
+    private static final String getAllQuery = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors";
+
     public ContractorDAO() {
         contractors = new ArrayList<>();
     }

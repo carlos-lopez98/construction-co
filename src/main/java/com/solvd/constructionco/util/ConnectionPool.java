@@ -42,7 +42,7 @@ public class ConnectionPool {
         }
     }
 
-    //Get Instance method for lazy initialization
+    //Get Instance method for lazy initialization - you have to do ConnectionPool.getInstance()
     public synchronized static ConnectionPool getInstance() {
         if (instance == null) {
             instance = new ConnectionPool();
@@ -73,6 +73,7 @@ public class ConnectionPool {
         long startTime = System.currentTimeMillis();
         long elapsedTime = 0;
 
+        //Added a timeout
         while (connectionPool.isEmpty() && elapsedTime < timeout) {
             try {
                 wait(timeout - elapsedTime);
