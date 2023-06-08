@@ -11,6 +11,12 @@ public class EmployeeDAO implements iEmployeeDAO<Employee, Integer> {
 
     private List<Employee> employees;
 
+    private final String getAllQuery = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees";
+    private final String getByIdQuery = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees WHERE employee_id = ?";
+    private final String saveQuery = "INSERT INTO employees VALUES(?,?,?,?,?,?,?)";
+    private final String deleteQuery = "DELETE FROM employees WHERE employee_id = ?";
+    private final String updateQuery = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, position = ? WHERE employee_id = ?";
+
     public EmployeeDAO() {
         employees = new ArrayList<>();
     }
