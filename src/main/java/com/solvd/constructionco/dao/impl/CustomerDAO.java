@@ -10,6 +10,12 @@ import java.util.List;
 public class CustomerDAO implements iCustomerDAO<Customer, Integer> {
 
     private List<Customer> customers;
+    private final String getAllQuery = "SELECT customer_id, customer_name, email, phone_number, address FROM customers";
+    private final String getByIdQuery = "SELECT customer_id, customer_name, email, phone_number, address FROM customers WHERE customer_id = ?";
+    private final String saveQuery = "INSERT INTO customers VALUES(?,?,?,?,?)";
+    private final String deleteQuery = "DELETE FROM customers WHERE customer_id = ?";
+    private final String updateQuery = "UPDATE customers SET customer_name = ?, email = ?, phone_number = ?, address = ? WHERE customer_id = ?";
+
 
     public CustomerDAO() {
         customers = new ArrayList<>();
