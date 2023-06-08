@@ -11,6 +11,12 @@ public class EquipmentDAO implements iEquipmentDAO<Equipment, Integer> {
 
     private List<Equipment> equipmentList;
 
+    private final String getAllQuery = "SELECT equipment_id, equipment_name, description, status FROM equipment";
+    private final String getByIdQuery = "SELECT equipment_id, equipment_name, description, status FROM equipment WHERE equipment_id = ?";
+    private final String saveQuery = "INSERT INTO equipment VALUES(?,?,?,?)";
+    private final String deleteQuery = "DELETE FROM equipment WHERE equipment_id = ?";
+    private final String updateQuery = "UPDATE equipment SET equipment_name, description, status WHERE equipment_id = ?";
+
     public EquipmentDAO() {
         equipmentList = new ArrayList<>();
     }
