@@ -3,17 +3,21 @@ package com.solvd.constructionco.dao.impl;
 import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.iContractorDAO;
 import com.solvd.constructionco.models.Contractor;
+import com.solvd.constructionco.util.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContractorDAO implements iContractorDAO<Contractor, Integer> {
 
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private List<Contractor> contractors;
-
 
     private final String getAllQuery = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors";
     private final String getByIdQuery = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors WHERE contractor_id = ?";
@@ -23,46 +27,101 @@ public class ContractorDAO implements iContractorDAO<Contractor, Integer> {
 
 
     public ContractorDAO() {
-        contractors = new ArrayList<>();
+
     }
 
     @Override
     public Contractor getById(Integer contractorID) {
-        for (Contractor contractor : contractors) {
-            if (contractor.getContractorId() == contractorID) {
-                return contractor;
+        Contractor contractor = null;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(getByIdQuery)) {
+            statement.setInt(1, contractorID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                contractor = new Contractor(resultSet.getString("contractor_name"), resultSet.getString("email"));
+                contractor.setContractorId(resultSet.getInt("contractor_id"));
+                contractor.setPhoneNumber(resultSet.getString("phone_number"));
+                contractor.setAddress(resultSet.getString("address"));
             }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
-        return null;
+
+        return contractor;
     }
 
     @Override
     public void save(Contractor contractor) {
-        contractors.add(contractor);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(saveQuery)) {
+            statement.setInt(1, contractor.getContractorId());
+            statement.setString(2, contractor.getContractorName());
+            statement.setString(3, contractor.getEmail());
+            statement.setString(4, contractor.getPhoneNumber());
+            statement.setString(5, contractor.getAddress());
+
+            statement.executeUpdate();
+            logger.info("Successfully added contractor with ID " + contractor.getContractorId() + " to the database");
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public void update(Contractor contractor) {
-        Contractor existingContractor = getById(contractor.getContractorId());
-        if (existingContractor != null) {
-            existingContractor.setContractorName(contractor.getContractorName());
-            existingContractor.setEmail(contractor.getEmail());
-            existingContractor.setPhoneNumber(contractor.getPhoneNumber());
-            existingContractor.setAddress(contractor.getAddress());
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+            statement.setString(1, contractor.getContractorName());
+            statement.setString(2, contractor.getEmail());
+            statement.setString(3, contractor.getPhoneNumber());
+            statement.setString(4, contractor.getAddress());
+            statement.setInt(5, contractor.getContractorId());
+
+            statement.executeUpdate();
+            logger.info("Successfully updated contractor with ID " + contractor.getContractorId());
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
     }
 
     @Override
     public void delete(Integer contractorID) {
-        Contractor contractorToRemove = getById(contractorID);
-        if (contractorToRemove != null) {
-            contractors.remove(contractorToRemove);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+            statement.setInt(1, contractorID);
+
+            statement.executeUpdate();
+            logger.info("Successfully deleted contractor with ID " + contractorID);
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
     }
 
     @Override
     public List<Contractor> getAll() {
-        return contractors;
+        List<Contractor> contractorList = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(getAllQuery);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Contractor contractor = new Contractor();
+                contractor.setContractorId(resultSet.getInt("contractor_id"));
+                contractor.setContractorName(resultSet.getString("contractor_name"));
+                contractor.setEmail(resultSet.getString("email"));
+                contractor.setPhoneNumber(resultSet.getString("phone_number"));
+                contractor.setAddress(resultSet.getString("address"));
+                contractorList.add(contractor);
+            }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
+
+        return contractorList;
     }
 }
 
