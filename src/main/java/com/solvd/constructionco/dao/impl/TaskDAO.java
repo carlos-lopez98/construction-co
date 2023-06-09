@@ -10,6 +10,12 @@ import java.util.List;
 public class TaskDAO implements iTaskDAO<Task, Integer> {
     private List<Task> tasks;
 
+    private final String getAllQuery = "SELECT task_id, task_name, status, due_date FROM tasks";
+    private final String getByIdQuery = "SELECT task_id, task_name, status, due_date FROM tasks WHERE task_id = ?";
+    private final String saveQuery = "INSERT INTO tasks VALUES(?,?,?)";
+    private final String deleteQuery = "DELETE FROM tasks WHERE task_id = ?";
+    private final String updateQuery = "UPDATE tasks SET task_id = ?, task_name = ?, status = ?,due_date = ? WHERE task_id = ?";
+
     public TaskDAO() {
         tasks = new ArrayList<>();
     }
