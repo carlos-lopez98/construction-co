@@ -1,0 +1,12 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Equipment">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="equipmentId" type="xs:int"/>
+                <xs:element name="equipmentName" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="available" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,7 @@
+<Contractor>
+    <contractorId>123</contractorId>
+    <contractorName>John Doe</contractorName>
+    <email>johndoe@gmail.com</email>
+    <phoneNumber>1234567890</phoneNumber>
+    <address>123 Main St, City</address>
+</Contractor>

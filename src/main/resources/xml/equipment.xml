@@ -1,0 +1,6 @@
+<Equipment>
+    <equipmentId>123</equipmentId>
+    <equipmentName>Excavator</equipmentName>
+    <description>Heavy-duty digging machine</description>
+    <available>true</available>
+</Equipment>

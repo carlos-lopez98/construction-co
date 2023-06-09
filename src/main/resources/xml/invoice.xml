@@ -1,0 +1,8 @@
+<Invoice>
+    <invoiceId>123</invoiceId>
+    <purchaseOrderId>456</purchaseOrderId>
+    <customerId>789</customerId>
+    <contractorId>987</contractorId>
+    <dueDate>2023-06-07</dueDate>
+    <totalDue>1000</totalDue>
+</Invoice>

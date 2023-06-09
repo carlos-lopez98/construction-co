@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Invoice">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="invoiceId" type="xs:int"/>
+                <xs:element name="purchaseOrderId" type="xs:int"/>
+                <xs:element name="customerId" type="xs:int"/>
+                <xs:element name="contractorId" type="xs:int"/>
+                <xs:element name="dueDate" type="xs:date"/>
+                <xs:element name="totalDue" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
