@@ -7,6 +7,8 @@ public class Contractor {
     private String phoneNumber;
     private String address;
 
+    public Contractor(){};
+
     public Contractor(String contractorName, String email){
         this.contractorName = contractorName;
         this.email = email;
