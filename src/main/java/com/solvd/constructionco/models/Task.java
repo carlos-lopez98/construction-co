@@ -1,5 +1,6 @@
 package com.solvd.constructionco.models;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Task {
@@ -45,7 +46,7 @@ public class Task {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 }
