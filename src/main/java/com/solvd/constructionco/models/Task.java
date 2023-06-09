@@ -8,7 +8,7 @@ public class Task {
     private int taskId;
     private String taskName;
     private boolean isClosed;
-    private LocalDate dueDate;
+    private Date dueDate;
 
     public Task(){
 
@@ -42,7 +42,7 @@ public class Task {
         isClosed = closed;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 

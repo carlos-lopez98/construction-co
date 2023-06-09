@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class TaskDAO implements iTaskDAO<Task, Integer> {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
             statement.setString(3, String.valueOf(task.isClosed()));
-            statement.setDate(4, Date.valueOf(task.getDueDate()));
+            statement.setDate(4, task.getDueDate());
 
             statement.executeUpdate();
             logger.info("Successfully added " + task.getTaskName() + " to database");
@@ -72,7 +73,7 @@ public class TaskDAO implements iTaskDAO<Task, Integer> {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
             statement.setString(3, String.valueOf(task.isClosed()));
-            statement.setDate(4, Date.valueOf(task.getDueDate()));
+            statement.setDate(4, task.getDueDate());
             statement.setInt(5, task.getTaskId());
 
             statement.executeUpdate();

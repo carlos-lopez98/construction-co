@@ -7,12 +7,19 @@ import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;
 import com.solvd.constructionco.service.ServiceRegistry;
 import com.solvd.constructionco.service.services.*;
+import com.solvd.constructionco.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
+    private static final String invoiceFilePath = "src/main/resources/xml/invoice.xml";
+    private static final String invoiceXSDFilePath = "src/main/resources/xml/invoice_xsd.xml";
+    private static final String equipmentFilePath = "src/main/resources/xml/equipment.xml";
+    private static final String equipmentXSDFilePath = "src/main/resources/xml/equipment_xsd.xml";
+    private static final String contractorFilePath = "src/main/resources/xml/contractor.xml";
+    private static final String contractorXSDFilePath = "src/main/resources/xml/contractor_xsd.xml";
 
     public static void main(String args[]){
 
@@ -52,5 +59,34 @@ public class Main {
 
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
+
+        iParser<Equipment> equipmentParser = new DOMEquipmentParser(equipmentFilePath);
+        iParser<Invoice> invoiceParser = new DOMInvoiceParser(invoiceFilePath);
+        iParser<Contractor> contractorParser = new DOMContractorParser(contractorFilePath);
+        Contractor contractor = (Contractor) contractorParser.parse();
+        Equipment equipment = (Equipment) equipmentParser.parse();
+        Invoice invoice = (Invoice) invoiceParser.parse();
+
+        // Access and use the parsed invoice object
+        logger.info((("Invoice object succesfully created, Invoice: ID " + invoice.getInvoiceId())));
+        logger.info((("Equipment object succesfully created, Equipment Name: " + equipment.getEquipmentName())));
+        logger.info((("Contractor object succesfully created, Contractor Name: " + contractor.getContractorName())));
+
+        //Checking Validation of XML to Schema
+        validateXML(invoiceFilePath, invoiceXSDFilePath);
+        validateXML(equipmentFilePath, equipmentXSDFilePath);
+        validateXML(contractorFilePath, contractorXSDFilePath);
+    }
+
+
+    //Uses the validator to check validation
+    private static void validateXML(String XML, String XSD) {
+        DOMValidator validator = new DOMValidator();
+        boolean isValid = validator.validateXML(XML, XSD);
+        if (isValid) {
+            logger.info("XML is valid.");
+        } else {
+            logger.info("XML is invalid.");
+        }
     }
 }
