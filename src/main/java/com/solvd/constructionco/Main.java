@@ -13,13 +13,14 @@ import org.apache.logging.log4j.Logger;
 public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private static final String invoiceXSDFilePath = "src/main/resources/xml/invoice_xsd.xml";
-    private static final String equipmentXSDFilePath = "src/main/resources/xml/equipment_xsd.xml";
-    private static final String contractorXSDFilePath = "src/main/resources/xml/contractor_xsd.xml";
+    private static final String INVOICE_XSD_PATH = "src/main/resources/xml/invoice_xsd.xml";
+    private static final String EQUIPMENT_XSD_PATH = "src/main/resources/xml/equipment_xsd.xml";
+    private static final String CONTRACTOR_XSD_PATH = "src/main/resources/xml/contractor_xsd.xml";
     private static final String INVOICE_FILE_PATH = "src/main/resources/xml/invoice.xml";
     private static final String EQUIPMENT_FILE_PATH = "src/main/resources/xml/equipment.xml";
     private static final String CONTRACTOR_FILE_PATH = "src/main/resources/xml/contractor.xml";
-    private static final ParseAndValidationService PARSE_AND_VALIDATION_SERVICE = new ParseAndValidationService();
+    private static final ParseAndValidationService parseAndValidationService = new ParseAndValidationService();
+
 
     public static void main(String args[]){
 
@@ -60,18 +61,20 @@ public class Main {
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
         //Parse to object
-        Contractor contractor = PARSE_AND_VALIDATION_SERVICE.parseContractor(CONTRACTOR_FILE_PATH);
-        Invoice invoice = PARSE_AND_VALIDATION_SERVICE.parseInvoice(INVOICE_FILE_PATH);
-        Equipment equipment = PARSE_AND_VALIDATION_SERVICE.parseEquipment(EQUIPMENT_FILE_PATH);
+        Contractor contractor = parseAndValidationService.parseContractor(CONTRACTOR_FILE_PATH);
+        Invoice invoice = parseAndValidationService.parseInvoice(INVOICE_FILE_PATH);
+        Equipment equipment = parseAndValidationService.parseEquipment(EQUIPMENT_FILE_PATH);
 
-
-
-
-
+        //Validate XML
+        if(parseAndValidationService.validateXML(INVOICE_FILE_PATH,INVOICE_XSD_PATH)){
+            logger.info("Invoice File Validation was Successful");
+        }
+        if( parseAndValidationService.validateXML(CONTRACTOR_FILE_PATH,CONTRACTOR_XSD_PATH)){
+            logger.info("Contractor File Validation was Successful");
+        }
+        if( parseAndValidationService.validateXML(EQUIPMENT_FILE_PATH,EQUIPMENT_XSD_PATH)){
+            logger.info("Equipment File Validation was Successful");
+        }
 
     }
-
-
-    //Uses the validator to check validation
-
 }
