@@ -15,11 +15,11 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private static final String getAllQuery = "SELECT task_id, task_name, status, due_date FROM tasks";
-    private static final String getByIdQuery = "SELECT task_id, task_name, status, due_date FROM tasks WHERE task_id = ?";
-    private static final String saveQuery = "INSERT INTO tasks VALUES(?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM tasks WHERE task_id = ?";
-    private static final String updateQuery = "UPDATE tasks SET task_id = ?, task_name = ?, status = ?,due_date = ? WHERE task_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT task_id, task_name, status, due_date FROM tasks";
+    private static final String GET_BY_ID_QUERY = "SELECT task_id, task_name, status, due_date FROM tasks WHERE task_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO tasks VALUES(?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM tasks WHERE task_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE tasks SET task_id = ?, task_name = ?, status = ?,due_date = ? WHERE task_id = ?";
 
     public TaskDAO(){};
 
@@ -29,7 +29,7 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
 
         //This auto closes the connection
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getByIdQuery)
+             PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)
 
         ) {
 
@@ -56,7 +56,7 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     @Override
     public void save(Task task) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(saveQuery)) {
+             PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
             statement.setString(3, String.valueOf(task.isClosed()));
@@ -72,7 +72,7 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     @Override
     public void update(Task task) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
             statement.setString(3, String.valueOf(task.isClosed()));
@@ -89,7 +89,7 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     @Override
     public void delete(Integer id) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+             PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, id);
 
             statement.executeUpdate();
@@ -104,7 +104,7 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
         List<Task> taskList = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getAllQuery);
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
