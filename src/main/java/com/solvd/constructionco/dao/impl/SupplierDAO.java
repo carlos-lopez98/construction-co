@@ -9,11 +9,11 @@ import java.util.List;
 public class SupplierDAO implements ISupplierDAO<Supplier, Integer> {
     private List<Supplier> suppliers;
 
-    private static final String getAllQuery = "SELECT supplier_id, supplier_name, email FROM suppliers";
-    private static final String getByIdQuery = "SELECT supplier_id, supplier_name, email FROM suppliers WHERE supplier_id = ?";
-    private static final String saveQuery = "INSERT INTO suppliers VALUES(?,?,?)";
-    private static final String deleteQuery = "DELETE FROM suppliers WHERE supplier_id = ?";
-    private static final String updateQuery = "UPDATE suppliers SET supplier_id = ?, supplier_name = ?, email = ? WHERE supplier_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT supplier_id, supplier_name, email FROM suppliers";
+    private static final String GET_BY_ID_QUERY = "SELECT supplier_id, supplier_name, email FROM suppliers WHERE supplier_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO suppliers VALUES(?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM suppliers WHERE supplier_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE suppliers SET supplier_id = ?, supplier_name = ?, email = ? WHERE supplier_id = ?";
 
 
     public SupplierDAO() {
