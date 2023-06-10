@@ -1,4 +1,4 @@
 package com.solvd.constructionco.service;
 
-public interface IContractorService {
+public interface IContractorService extends ConstructionServiceOperations{
 }

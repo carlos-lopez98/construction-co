@@ -1,7 +1,7 @@
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.MaterialDAO;
-import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
+import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Material;
 
 import java.util.List;
