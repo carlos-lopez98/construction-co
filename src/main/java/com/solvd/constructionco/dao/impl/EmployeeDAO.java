@@ -10,11 +10,11 @@ public class EmployeeDAO implements IEmployeeDAO<Employee, Integer> {
 
     private List<Employee> employees;
 
-    private static final String getAllQuery = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees";
-    private static final String getByIdQuery = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees WHERE employee_id = ?";
-    private static final String saveQuery = "INSERT INTO employees VALUES(?,?,?,?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM employees WHERE employee_id = ?";
-    private static final String updateQuery = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, position = ? WHERE employee_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees";
+    private static final String GET_BY_ID_QUERY = "SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position FROM employees WHERE employee_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO employees VALUES(?,?,?,?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM employees WHERE employee_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, position = ? WHERE employee_id = ?";
 
     public EmployeeDAO() {
         employees = new ArrayList<>();
