@@ -1,14 +1,15 @@
 package com.solvd.constructionco.service.impl;
 
+import com.solvd.constructionco.util.parse.impl.DOMContractorParser;
+import com.solvd.constructionco.util.parse.impl.DOMEquipmentParser;
 import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
 
 public class ParserService {
 
-    private static final String INVOICE_FILE_PATH = "src/main/resources/xml/invoice.xml";
-    private static final String CONTRACTOR_FILE_PATH = "src/main/resources/xml/contractor.xml";
-    private static final String EQUIPMENT_FILE_PATH = "src/main/resources/xml/equipment.xml";
-    private static final DOMInvoiceParser invoiceParser = new DOMInvoiceParser();
 
+    private static final DOMInvoiceParser invoiceParser = new DOMInvoiceParser();
+    private static final DOMContractorParser contractorParser = new DOMContractorParser();
+    private static final DOMEquipmentParser equipmentParser = new DOMEquipmentParser();
 
     public ParserService(){
 
@@ -18,20 +19,20 @@ public class ParserService {
     public void parseContractor(String contractorFilePath){
 
 
-
+        contractorParser.parse(contractorFilePath);
 
     }
 
 
     public void parseEquipment(String equipmentFilePath){
 
-
+        equipmentParser.parse(equipmentFilePath);
     }
 
 
     public void parseInvoice(String invoiceFilePath){
 
-    invoiceParser.parse(INVOICE_FILE_PATH);
+    invoiceParser.parse(invoiceFilePath);
 
     }
 }
