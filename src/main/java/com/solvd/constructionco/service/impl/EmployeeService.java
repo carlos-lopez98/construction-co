@@ -3,10 +3,11 @@ package com.solvd.constructionco.service.impl;
 import com.solvd.constructionco.dao.impl.EmployeeDAO;
 import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Employee;
+import com.solvd.constructionco.service.IEmployeeService;
 
 import java.util.List;
 
-public class EmployeeService implements ConstructionServiceOperations<Employee, Integer> {
+public class EmployeeService implements IEmployeeService {
 
     private EmployeeDAO employeeDAO;
 

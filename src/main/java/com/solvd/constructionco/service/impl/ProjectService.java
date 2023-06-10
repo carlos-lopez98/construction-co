@@ -3,10 +3,11 @@ package com.solvd.constructionco.service.impl;
 import com.solvd.constructionco.dao.impl.ProjectDAO;
 import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Project;
+import com.solvd.constructionco.service.IProjectService;
 
 import java.util.List;
 
-public class ProjectService implements ConstructionServiceOperations<Project, Integer> {
+public class ProjectService implements IProjectService {
 
     private ProjectDAO projectDAO;
 
