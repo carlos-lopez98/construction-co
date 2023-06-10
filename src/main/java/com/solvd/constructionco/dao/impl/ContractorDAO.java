@@ -19,11 +19,11 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private static final String getAllQuery = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors";
-    private static final String getByIdQuery = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors WHERE contractor_id = ?";
-    private static final String saveQuery = "INSERT INTO contractors VALUES(?,?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM contractors WHERE contractor_id = ?";
-    private static final String updateQuery = "UPDATE contractors SET contractor_name = ?, email = ?, phone_number = ?, address = ? WHERE contractor_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors";
+    private static final String GET_BY_ID_QUERY = "SELECT contractor_id, contractor_name, email, phone_number, address FROM contractors WHERE contractor_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO contractors VALUES(?,?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM contractors WHERE contractor_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE contractors SET contractor_name = ?, email = ?, phone_number = ?, address = ? WHERE contractor_id = ?";
 
     public ContractorDAO() {
     }
@@ -33,7 +33,7 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
         Contractor contractor = null;
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getByIdQuery)) {
+             PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, contractorID);
 
             ResultSet resultSet = statement.executeQuery();
@@ -54,7 +54,7 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     @Override
     public void save(Contractor contractor) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(saveQuery)) {
+             PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
             statement.setInt(1, contractor.getContractorId());
             statement.setString(2, contractor.getContractorName());
             statement.setString(3, contractor.getEmail());
@@ -71,7 +71,7 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     @Override
     public void update(Contractor contractor) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setString(1, contractor.getContractorName());
             statement.setString(2, contractor.getEmail());
             statement.setString(3, contractor.getPhoneNumber());
@@ -88,7 +88,7 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     @Override
     public void delete(Integer contractorID) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+             PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, contractorID);
 
             statement.executeUpdate();
@@ -103,7 +103,7 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
         List<Contractor> contractorList = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getAllQuery);
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
