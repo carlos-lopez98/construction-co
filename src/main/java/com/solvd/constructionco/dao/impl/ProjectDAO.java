@@ -10,11 +10,11 @@ import java.util.List;
 public class ProjectDAO implements iProjectDAO<Project, Integer> {
     private List<Project> projects;
 
-    private final String getAllQuery = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order";
-    private final String getByIdQuery = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order WHERE purchase_order_id = ?";
-    private final String saveQuery = "INSERT INTO purchase_order VALUES(?,?,?,?)";
-    private final String deleteQuery = "DELETE FROM purchase_order WHERE purchase_order_id = ?";
-    private final String updateQuery = "UPDATE purchase_order SET purchase_order_id = ?, purchaseorder_name = ?, budget = ?, description = ?, status = ? WHERE purchase_order_id = ?";
+    private static final String getAllQuery = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order";
+    private static final String getByIdQuery = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order WHERE purchase_order_id = ?";
+    private static final String saveQuery = "INSERT INTO purchase_order VALUES(?,?,?,?)";
+    private static final String deleteQuery = "DELETE FROM purchase_order WHERE purchase_order_id = ?";
+    private static final String updateQuery = "UPDATE purchase_order SET purchase_order_id = ?, purchaseorder_name = ?, budget = ?, description = ?, status = ? WHERE purchase_order_id = ?";
 
 
     public ProjectDAO() {

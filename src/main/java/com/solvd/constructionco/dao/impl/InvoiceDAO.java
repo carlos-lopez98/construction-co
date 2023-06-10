@@ -11,11 +11,11 @@ public class InvoiceDAO implements iInvoiceDAO<Invoice, Integer> {
 
     private List<Invoice> invoices;
 
-    private final String getAllQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
-    private final String getByIdQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
-    private final String saveQuery = "INSERT INTO invoices VALUES(?,?,?,?,?,?)";
-    private final String deleteQuery = "DELETE FROM invoices WHERE invoice_id = ?";
-    private final String updateQuery = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
+    private static final String getAllQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
+    private static final String getByIdQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
+    private static final String saveQuery = "INSERT INTO invoices VALUES(?,?,?,?,?,?)";
+    private static final String deleteQuery = "DELETE FROM invoices WHERE invoice_id = ?";
+    private static final String updateQuery = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
 
     public InvoiceDAO() {
         invoices = new ArrayList<>();

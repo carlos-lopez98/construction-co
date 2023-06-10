@@ -11,11 +11,11 @@ public class MaterialDAO implements iMaterialDAO<Material, Integer> {
 
     private List<Material> materials;
 
-    private final String getAllQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials";
-    private final String getByIdQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials WHERE material_id = ?";
-    private final String saveQuery = "INSERT INTO materials VALUES(?,?,?,?,?)";
-    private final String deleteQuery = "DELETE FROM materials WHERE material_id = ?";
-    private final String updateQuery = "UPDATE materials SET material_id = ?, supplier_id = ?, material_name = ?, description = ?, price_per_unit = ? WHERE material_id = ?";
+    private static final String getAllQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials";
+    private static final String getByIdQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials WHERE material_id = ?";
+    private static final String saveQuery = "INSERT INTO materials VALUES(?,?,?,?,?)";
+    private static final String deleteQuery = "DELETE FROM materials WHERE material_id = ?";
+    private static final String updateQuery = "UPDATE materials SET material_id = ?, supplier_id = ?, material_name = ?, description = ?, price_per_unit = ? WHERE material_id = ?";
 
 
     public MaterialDAO() {

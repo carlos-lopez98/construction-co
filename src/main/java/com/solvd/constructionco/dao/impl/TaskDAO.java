@@ -17,11 +17,11 @@ public class TaskDAO implements iTaskDAO<Task, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private final String getAllQuery = "SELECT task_id, task_name, status, due_date FROM tasks";
-    private final String getByIdQuery = "SELECT task_id, task_name, status, due_date FROM tasks WHERE task_id = ?";
-    private final String saveQuery = "INSERT INTO tasks VALUES(?,?,?,?)";
-    private final String deleteQuery = "DELETE FROM tasks WHERE task_id = ?";
-    private final String updateQuery = "UPDATE tasks SET task_id = ?, task_name = ?, status = ?,due_date = ? WHERE task_id = ?";
+    private static final String getAllQuery = "SELECT task_id, task_name, status, due_date FROM tasks";
+    private static final String getByIdQuery = "SELECT task_id, task_name, status, due_date FROM tasks WHERE task_id = ?";
+    private static final String saveQuery = "INSERT INTO tasks VALUES(?,?,?,?)";
+    private static final String deleteQuery = "DELETE FROM tasks WHERE task_id = ?";
+    private static final String updateQuery = "UPDATE tasks SET task_id = ?, task_name = ?, status = ?,due_date = ? WHERE task_id = ?";
 
     public TaskDAO(){};
 
