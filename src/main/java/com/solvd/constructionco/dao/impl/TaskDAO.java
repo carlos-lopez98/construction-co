@@ -31,17 +31,22 @@ public class TaskDAO implements iTaskDAO<Task, Integer> {
 
         //This auto closes the connection
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(getByIdQuery)) {
+             PreparedStatement statement = connection.prepareStatement(getByIdQuery)
+
+        ) {
+
             statement.setInt(1, taskId);
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                task.setTaskId(resultSet.getInt("task_id"));
-                task.setTaskName(resultSet.getString("task_name"));
-                task.setClosed(Boolean.parseBoolean(resultSet.getString("status")));
-                task.setDueDate(resultSet.getDate("due_date"));
-                return task;
+            //Moved to try-with-resources to autoClose
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    task = new Task();
+                    task.setTaskId(resultSet.getInt("task_id"));
+                    task.setTaskName(resultSet.getString("task_name"));
+                    task.setClosed(Boolean.parseBoolean(resultSet.getString("status")));
+                    task.setDueDate(resultSet.getDate("due_date"));
+                    return task;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
