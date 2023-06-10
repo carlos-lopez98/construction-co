@@ -10,11 +10,11 @@ public class EquipmentDAO implements IEquipmentDAO<Equipment, Integer> {
 
     private List<Equipment> equipmentList;
 
-    private static final String getAllQuery = "SELECT equipment_id, equipment_name, description, status FROM equipment";
-    private static final String getByIdQuery = "SELECT equipment_id, equipment_name, description, status FROM equipment WHERE equipment_id = ?";
-    private static final String saveQuery = "INSERT INTO equipment VALUES(?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM equipment WHERE equipment_id = ?";
-    private static final String updateQuery = "UPDATE equipment SET equipment_name = ?, description = ?, status = ? WHERE equipment_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT equipment_id, equipment_name, description, status FROM equipment";
+    private static final String GET_BY_ID_QUERY = "SELECT equipment_id, equipment_name, description, status FROM equipment WHERE equipment_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO equipment VALUES(?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM equipment WHERE equipment_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE equipment SET equipment_name = ?, description = ?, status = ? WHERE equipment_id = ?";
 
     public EquipmentDAO() {
         equipmentList = new ArrayList<>();
