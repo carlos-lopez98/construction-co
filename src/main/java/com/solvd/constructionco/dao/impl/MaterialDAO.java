@@ -10,11 +10,11 @@ public class MaterialDAO implements IMaterialDAO<Material, Integer> {
 
     private List<Material> materials;
 
-    private static final String getAllQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials";
-    private static final String getByIdQuery = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials WHERE material_id = ?";
-    private static final String saveQuery = "INSERT INTO materials VALUES(?,?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM materials WHERE material_id = ?";
-    private static final String updateQuery = "UPDATE materials SET material_id = ?, supplier_id = ?, material_name = ?, description = ?, price_per_unit = ? WHERE material_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials";
+    private static final String GET_BY_ID_QUERY = "SELECT material_id, supplier_id, material_name, description, price_per_unit FROM materials WHERE material_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO materials VALUES(?,?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM materials WHERE material_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE materials SET material_id = ?, supplier_id = ?, material_name = ?, description = ?, price_per_unit = ? WHERE material_id = ?";
 
 
     public MaterialDAO() {
