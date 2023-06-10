@@ -10,11 +10,11 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
     private List<Invoice> invoices;
 
-    private static final String getAllQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
-    private static final String getByIdQuery = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
-    private static final String saveQuery = "INSERT INTO invoices VALUES(?,?,?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM invoices WHERE invoice_id = ?";
-    private static final String updateQuery = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
+    private static final String GET_BY_ID_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO invoices VALUES(?,?,?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM invoices WHERE invoice_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
 
     public InvoiceDAO() {
         invoices = new ArrayList<>();
