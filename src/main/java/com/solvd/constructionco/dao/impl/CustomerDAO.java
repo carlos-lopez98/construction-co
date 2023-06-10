@@ -1,13 +1,12 @@
 package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iCustomerDAO;
+import com.solvd.constructionco.dao.ICustomerDAO;
 import com.solvd.constructionco.models.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO implements iCustomerDAO<Customer, Integer> {
+public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
 
     private List<Customer> customers;
     private static final String getAllQuery = "SELECT customer_id, customer_name, email, phone_number, address FROM customers";

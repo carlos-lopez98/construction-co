@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Invoice;
 
 import java.util.List;
 
-public interface iInvoiceDAO<Invoice, Integer> extends ConstructionDAO<Invoice, Integer>{
+public interface IInvoiceDAO<Invoice, Integer> extends ConstructionDAO<Invoice, Integer>{
 
     @Override
     Invoice getById(Integer invoiceID);

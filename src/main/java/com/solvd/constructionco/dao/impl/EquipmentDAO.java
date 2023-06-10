@@ -1,13 +1,12 @@
 package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iEquipmentDAO;
+import com.solvd.constructionco.dao.IEquipmentDAO;
 import com.solvd.constructionco.models.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipmentDAO implements iEquipmentDAO<Equipment, Integer> {
+public class EquipmentDAO implements IEquipmentDAO<Equipment, Integer> {
 
     private List<Equipment> equipmentList;
 

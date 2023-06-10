@@ -1,13 +1,12 @@
 package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iSupplierDAO;
+import com.solvd.constructionco.dao.ISupplierDAO;
 import com.solvd.constructionco.models.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDAO implements iSupplierDAO<Supplier, Integer> {
+public class SupplierDAO implements ISupplierDAO<Supplier, Integer> {
     private List<Supplier> suppliers;
 
     private static final String getAllQuery = "SELECT supplier_id, supplier_name, email FROM suppliers";

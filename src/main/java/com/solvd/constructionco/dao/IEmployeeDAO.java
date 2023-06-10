@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Employee;
 
 import java.util.List;
 
-public interface iEmployeeDAO<Employee, Integer> extends ConstructionDAO<Employee, Integer>{
+public interface IEmployeeDAO<Employee, Integer> extends ConstructionDAO<Employee, Integer>{
 
     @Override
     Employee getById(Integer employeeID);

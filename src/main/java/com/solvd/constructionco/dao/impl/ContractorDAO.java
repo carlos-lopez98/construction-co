@@ -1,7 +1,7 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.Main;
-import com.solvd.constructionco.dao.iContractorDAO;
+import com.solvd.constructionco.dao.IContractorDAO;
 import com.solvd.constructionco.models.Contractor;
 import com.solvd.constructionco.util.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContractorDAO implements iContractorDAO<Contractor, Integer> {
+public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);

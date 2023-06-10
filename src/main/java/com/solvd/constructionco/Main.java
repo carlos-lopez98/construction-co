@@ -59,7 +59,6 @@ public class Main {
 
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
-
         iParser<Equipment> equipmentParser = new DOMEquipmentParser(equipmentFilePath);
         iParser<Invoice> invoiceParser = new DOMInvoiceParser(invoiceFilePath);
         iParser<Contractor> contractorParser = new DOMContractorParser(contractorFilePath);

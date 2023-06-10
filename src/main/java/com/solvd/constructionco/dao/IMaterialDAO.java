@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Material;
 
 import java.util.List;
 
-public interface iMaterialDAO<Material, Integer> extends ConstructionDAO<Material, Integer>{
+public interface IMaterialDAO<Material, Integer> extends ConstructionDAO<Material, Integer>{
 
     @Override
     Material getById(Integer integer);

@@ -1,19 +1,17 @@
 package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.Main;
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iTaskDAO;
+import com.solvd.constructionco.dao.ITaskDAO;
 import com.solvd.constructionco.models.Task;
 import com.solvd.constructionco.util.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDAO implements iTaskDAO<Task, Integer> {
+public class TaskDAO implements ITaskDAO<Task, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 

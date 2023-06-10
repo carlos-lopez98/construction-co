@@ -8,8 +8,4 @@ public class ConstructionService {
         this.serviceRegistry = serviceRegistry;
     }
 
-
-
-
-
 }

@@ -1,13 +1,12 @@
 package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iProjectDAO;
+import com.solvd.constructionco.dao.IProjectDAO;
 import com.solvd.constructionco.models.Project;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectDAO implements iProjectDAO<Project, Integer> {
+public class ProjectDAO implements IProjectDAO<Project, Integer> {
     private List<Project> projects;
 
     private static final String getAllQuery = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order";

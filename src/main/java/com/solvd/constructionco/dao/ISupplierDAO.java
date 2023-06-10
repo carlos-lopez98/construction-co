@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Supplier;
 
 import java.util.List;
 
-public interface iSupplierDAO<Supplier, Integer> extends ConstructionDAO<Supplier, Integer>{
+public interface ISupplierDAO<Supplier, Integer> extends ConstructionDAO<Supplier, Integer>{
 
     @Override
     Supplier getById(Integer supplierID);

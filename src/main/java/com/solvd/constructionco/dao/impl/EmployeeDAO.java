@@ -1,13 +1,12 @@
 package com.solvd.constructionco.dao.impl;
 
-import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.dao.iEmployeeDAO;
+import com.solvd.constructionco.dao.IEmployeeDAO;
 import com.solvd.constructionco.models.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDAO implements iEmployeeDAO<Employee, Integer> {
+public class EmployeeDAO implements IEmployeeDAO<Employee, Integer> {
 
     private List<Employee> employees;
 
