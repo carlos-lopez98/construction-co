@@ -1,16 +1,24 @@
 package com.solvd.constructionco.util.parse.impl;
 
+import com.solvd.constructionco.Main;
 import com.solvd.constructionco.models.Equipment;
 import com.solvd.constructionco.util.parse.iParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 
 public class DOMEquipmentParser implements iParser<Equipment> {
+
+    private static final Logger logger = LogManager.getLogger(Main.class);
     private Document document;
 
     public DOMEquipmentParser() {
@@ -23,8 +31,8 @@ public class DOMEquipmentParser implements iParser<Equipment> {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(new File(filePath));
-        } catch (Exception e) {
-            e.printStackTrace();
+        }  catch (IOException | SAXException | ParserConfigurationException e) {
+            logger.info("Exception " + e.getClass().getSimpleName() + " was thrown, Details: " + e);
         }
 
         Equipment equipment = new Equipment();
