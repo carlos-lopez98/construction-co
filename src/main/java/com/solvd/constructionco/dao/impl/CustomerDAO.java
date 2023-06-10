@@ -9,11 +9,11 @@ import java.util.List;
 public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
 
     private List<Customer> customers;
-    private static final String getAllQuery = "SELECT customer_id, customer_name, email, phone_number, address FROM customers";
-    private static final String getByIdQuery = "SELECT customer_id, customer_name, email, phone_number, address FROM customers WHERE customer_id = ?";
-    private static final String saveQuery = "INSERT INTO customers VALUES(?,?,?,?,?)";
-    private static final String deleteQuery = "DELETE FROM customers WHERE customer_id = ?";
-    private static final String updateQuery = "UPDATE customers SET customer_name = ?, email = ?, phone_number = ?, address = ? WHERE customer_id = ?";
+    private static final String GET_ALL_QUERY = "SELECT customer_id, customer_name, email, phone_number, address FROM customers";
+    private static final String GET_BY_ID_QUERY = "SELECT customer_id, customer_name, email, phone_number, address FROM customers WHERE customer_id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO customers VALUES(?,?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM customers WHERE customer_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE customers SET customer_name = ?, email = ?, phone_number = ?, address = ? WHERE customer_id = ?";
 
 
     public CustomerDAO() {
