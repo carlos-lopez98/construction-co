@@ -13,7 +13,12 @@ import java.io.File;
 public class DOMEquipmentParser implements iParser<Equipment> {
     private Document document;
 
-    public DOMEquipmentParser(String filePath) {
+    public DOMEquipmentParser() {
+
+    }
+
+    @Override
+    public Equipment parse(String filePath) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -21,10 +26,7 @@ public class DOMEquipmentParser implements iParser<Equipment> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
-    @Override
-    public Equipment parse() {
         Equipment equipment = new Equipment();
 
         Element equipmentElement = document.getDocumentElement();

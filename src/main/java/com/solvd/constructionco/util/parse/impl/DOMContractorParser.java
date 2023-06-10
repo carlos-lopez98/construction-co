@@ -14,14 +14,8 @@ public class DOMContractorParser implements iParser<Contractor> {
 
         private Document document;
 
-        public DOMContractorParser(String filePath) {
-            try {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                document = builder.parse(new File(filePath));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        public DOMContractorParser() {
+
         }
 
         @Override
@@ -32,7 +26,15 @@ public class DOMContractorParser implements iParser<Contractor> {
         }
 
          @Override
-        public Contractor parse() {
+        public Contractor parse(String filePath) {
+             try {
+                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                 DocumentBuilder builder = factory.newDocumentBuilder();
+                 document = builder.parse(new File(filePath));
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+
          Contractor contractor = new Contractor();
 
             Element contractorElement = document.getDocumentElement();
