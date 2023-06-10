@@ -7,11 +7,6 @@ import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;
 import com.solvd.constructionco.util.ServiceRegistry;
 import com.solvd.constructionco.service.impl.*;
-import com.solvd.constructionco.util.*;
-import com.solvd.constructionco.util.parse.iParser;
-import com.solvd.constructionco.util.parse.impl.DOMContractorParser;
-import com.solvd.constructionco.util.parse.impl.DOMEquipmentParser;
-import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +16,10 @@ public class Main {
     private static final String invoiceXSDFilePath = "src/main/resources/xml/invoice_xsd.xml";
     private static final String equipmentXSDFilePath = "src/main/resources/xml/equipment_xsd.xml";
     private static final String contractorXSDFilePath = "src/main/resources/xml/contractor_xsd.xml";
+    private static final String INVOICE_FILE_PATH = "src/main/resources/xml/invoice.xml";
+    private static final String EQUIPMENT_FILE_PATH = "src/main/resources/xml/equipment.xml";
+    private static final String CONTRACTOR_FILE_PATH = "src/main/resources/xml/contractor.xml";
+    private static final ParseAndValidationService PARSE_AND_VALIDATION_SERVICE = new ParseAndValidationService();
 
     public static void main(String args[]){
 
@@ -60,19 +59,19 @@ public class Main {
 
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 
+        //Parse to object
+        Contractor contractor = PARSE_AND_VALIDATION_SERVICE.parseContractor(CONTRACTOR_FILE_PATH);
+        Invoice invoice = PARSE_AND_VALIDATION_SERVICE.parseInvoice(INVOICE_FILE_PATH);
+        Equipment equipment = PARSE_AND_VALIDATION_SERVICE.parseEquipment(EQUIPMENT_FILE_PATH);
+
+
+
+
 
 
     }
 
 
     //Uses the validator to check validation
-    private static void validateXML(String XML, String XSD) {
-        DOMValidator validator = new DOMValidator();
-        boolean isValid = validator.validateXML(XML, XSD);
-        if (isValid) {
-            logger.info("XML is valid.");
-        } else {
-            logger.info("XML is invalid.");
-        }
-    }
+
 }
