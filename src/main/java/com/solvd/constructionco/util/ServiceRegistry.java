@@ -1,4 +1,4 @@
-package com.solvd.constructionco.service;
+package com.solvd.constructionco.util;
 
 import com.solvd.constructionco.exceptions.ServiceAlreadyInRegistry;
 import com.solvd.constructionco.exceptions.ServiceNotFoundException;

@@ -1,4 +1,4 @@
-package com.solvd.constructionco.service.services;
+package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.EquipmentDAO;
 import com.solvd.constructionco.interfaces.ConstructionServiceOperations;
