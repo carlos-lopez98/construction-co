@@ -1,4 +1,4 @@
-package com.solvd.constructionco.service;
+package com.solvd.constructionco.service.interfaces;
 
 import java.util.List;
 

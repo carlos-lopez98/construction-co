@@ -1,9 +1,8 @@
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.ProjectDAO;
-import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Project;
-import com.solvd.constructionco.service.IProjectService;
+import com.solvd.constructionco.service.interfaces.IProjectService;
 
 import java.util.List;
 

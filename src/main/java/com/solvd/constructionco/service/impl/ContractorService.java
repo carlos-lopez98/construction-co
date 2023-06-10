@@ -1,9 +1,8 @@
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.ContractorDAO;
-import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Contractor;
-import com.solvd.constructionco.service.IContractorService;
+import com.solvd.constructionco.service.interfaces.IContractorService;
 
 import java.util.List;
 

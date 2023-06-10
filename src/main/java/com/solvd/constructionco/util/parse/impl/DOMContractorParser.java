@@ -1,6 +1,7 @@
-package com.solvd.constructionco.util;
+package com.solvd.constructionco.util.parse.impl;
 
 import com.solvd.constructionco.models.Contractor;
+import com.solvd.constructionco.util.parse.iParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -9,7 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
-public class DOMContractorParser implements iParser<Contractor>{
+public class DOMContractorParser implements iParser<Contractor> {
 
         private Document document;
 

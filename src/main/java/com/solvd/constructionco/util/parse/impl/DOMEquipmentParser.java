@@ -1,6 +1,7 @@
-package com.solvd.constructionco.util;
+package com.solvd.constructionco.util.parse.impl;
 
 import com.solvd.constructionco.models.Equipment;
+import com.solvd.constructionco.util.parse.iParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

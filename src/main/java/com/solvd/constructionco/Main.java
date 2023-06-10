@@ -2,12 +2,16 @@ package com.solvd.constructionco;
 
 import com.solvd.constructionco.dao.impl.*;
 import com.solvd.constructionco.dao.ConstructionDAO;
-import com.solvd.constructionco.service.ConstructionServiceOperations;
+import com.solvd.constructionco.service.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;
 import com.solvd.constructionco.util.ServiceRegistry;
 import com.solvd.constructionco.service.impl.*;
 import com.solvd.constructionco.util.*;
+import com.solvd.constructionco.util.parse.iParser;
+import com.solvd.constructionco.util.parse.impl.DOMContractorParser;
+import com.solvd.constructionco.util.parse.impl.DOMEquipmentParser;
+import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

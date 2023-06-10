@@ -1,9 +1,8 @@
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.SupplierDAO;
-import com.solvd.constructionco.service.ConstructionServiceOperations;
 import com.solvd.constructionco.models.Supplier;
-import com.solvd.constructionco.service.ISupplierService;
+import com.solvd.constructionco.service.interfaces.ISupplierService;
 
 import java.util.List;
 
