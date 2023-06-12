@@ -36,7 +36,7 @@ public class Main {
         ConstructionDAO<Task, Integer> taskDao = new TaskDAO();
 
         //Initialize Services
-        ConstructionServiceOperations<Contractor, Integer> contractorService = new ContractorService((ContractorDAO) contractorDAO);
+      /*  ConstructionServiceOperations<Contractor, Integer> contractorService = new ContractorService((ContractorDAO) contractorDAO);
         ConstructionServiceOperations<Customer, Integer> customerService = new CustomerService((CustomerDAO) customerDAO);
         ConstructionServiceOperations<Employee, Integer> employeeService = new EmployeeService((EmployeeDAO) employeeDAO);
         ConstructionServiceOperations<Equipment, Integer> equipmentService = new EquipmentService((EquipmentDAO) equipmentDAO);
@@ -44,10 +44,10 @@ public class Main {
         ConstructionServiceOperations<Material, Integer> materialService = new MaterialService((MaterialDAO) materialDAO);
         ConstructionServiceOperations<Project, Integer> projectService = new ProjectService((ProjectDAO) projectDAO);
         ConstructionServiceOperations<Supplier, Integer> supplierService = new SupplierService((SupplierDAO) supplierDAO);
-        ConstructionServiceOperations<Task, Integer> taskService = new TaskService((TaskDAO) taskDao);
+        ConstructionServiceOperations<Task, Integer> taskService = new TaskService((TaskDAO) taskDao);*/
 
         //ADD to registry
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
+    /*    ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerService(contractorService);
         serviceRegistry.registerService(customerService);
         serviceRegistry.registerService(employeeService);
@@ -56,9 +56,11 @@ public class Main {
         serviceRegistry.registerService(materialService);
         serviceRegistry.registerService(projectService);
         serviceRegistry.registerService(supplierService);
-        serviceRegistry.registerService(taskService);
+        serviceRegistry.registerService(taskService);*/
 
+/*
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
+*/
 
         //Parse to object
         Contractor contractor = parseAndValidationService.parseContractor(CONTRACTOR_FILE_PATH);

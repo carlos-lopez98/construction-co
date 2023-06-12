@@ -1,6 +1,7 @@
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.dao.impl.ContractorDAO;
+import com.solvd.constructionco.exceptions.NoContractorInDatabaseException;
 import com.solvd.constructionco.models.Contractor;
 import com.solvd.constructionco.service.interfaces.IContractorService;
 
@@ -10,15 +11,26 @@ import java.util.List;
 
 public class ContractorService implements IContractorService {
 
-    private ContractorDAO contractorDAO;
+    private ContractorDAO contractorDAO = new ContractorDAO();
 
-    public ContractorService(ContractorDAO contractorDAO) {
-        this.contractorDAO = contractorDAO;
+    public ContractorService() {
     }
 
     @Override
-    public Contractor getById(Integer id) {
-        return contractorDAO.getById(id);
+    public Contractor getById(Integer contractorId) {
+
+
+        if(contractorId == null || contractorId < 0){
+            throw new IllegalArgumentException("Id entered is incorrect");
+        }
+
+        Contractor contractor = contractorDAO.getById(contractorId);
+
+        if(contractor == null){
+            throw new NoContractorInDatabaseException("Please add this contractor to database, currently this contractor is not in database");
+        }
+
+        return contractor;
     }
 
     @Override
