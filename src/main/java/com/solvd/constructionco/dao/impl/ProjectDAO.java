@@ -57,18 +57,36 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
 
     @Override
     public void save(Project project) {
-        projects.add(project);
+        //Try with Resources
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
+
+            statement.setInt(1, project.getPurchaseOrderId());
+            statement.setString(2, project.getPurchaseOrderName());
+            statement.setInt(3, project.getBudget());
+            statement.setBoolean(4, project.isClosed());
+
+            statement.executeUpdate();
+            logger.info("Successfully added purchase order with ID " + project.getPurchaseOrderId() + " to the database");
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public void update(Project project) {
-        int projectId = project.getPurchaseOrderId();
-        for (int i = 0; i < projects.size(); i++) {
-            Project existingProject = projects.get(i);
-            if (existingProject.getPurchaseOrderId() == projectId) {
-                projects.set(i, project);
-                return;
-            }
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+
+            statement.setInt(1, project.getPurchaseOrderId());
+            statement.setString(2, project.getPurchaseOrderName());
+            statement.setInt(3, project.getBudget());
+            statement.setBoolean(4, project.isClosed());
+
+            statement.executeUpdate();
+            logger.info("Successfully updated project with ID " + project.getPurchaseOrderId());
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
     }
 
