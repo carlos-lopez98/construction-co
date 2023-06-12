@@ -1,13 +1,24 @@
 package com.solvd.constructionco.dao.impl;
 
+import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.IProjectDAO;
+import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.models.Project;
+import com.solvd.constructionco.util.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDAO implements IProjectDAO<Project, Integer> {
-    private List<Project> projects;
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     private static final String GET_ALL_QUERY = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order";
     private static final String GET_BY_ID_QUERY = "SELECT purchase_order_id, purchaseorder_name, budget, status FROM purchase_order WHERE purchase_order_id = ?";
@@ -17,17 +28,31 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
 
 
     public ProjectDAO() {
-        projects = new ArrayList<>();
     }
 
     @Override
-    public Project getById(Integer id) {
-        for (Project project : projects) {
-            if (project.getPurchaseOrderId() == id) {
-                return project;
+    public Project getById(Integer purchaseOrderId) {
+        Project purchaseOrder = null;
+        //Try with resources auto closes connection
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
+            statement.setInt(1, purchaseOrderId);
+
+            //Try with resources - auto closes resultSet
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    purchaseOrder.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
+                    purchaseOrder.setPurchaseOrderName(resultSet.getString("purchaseorder_name"));
+                    purchaseOrder.setBudget(resultSet.getInt("budget"));
+                    purchaseOrder.setClosed(resultSet.getBoolean("status"));
+                }
             }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
-        return null;
+
+        return purchaseOrder;
     }
 
     @Override
