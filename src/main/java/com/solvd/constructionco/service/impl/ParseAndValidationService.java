@@ -33,7 +33,6 @@ public class ParseAndValidationService {
     return invoiceParser.parse(invoiceFilePath);
     }
 
-
     public boolean validateXML(String XMLFilePath, String XSDFilePath) {
         DOMValidator validator = new DOMValidator();
         boolean isValid = validator.validateXML(XMLFilePath, XSDFilePath);
