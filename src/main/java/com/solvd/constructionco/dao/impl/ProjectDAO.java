@@ -91,12 +91,38 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
     }
 
     @Override
-    public void delete(Integer id) {
-        projects.removeIf(project -> project.getPurchaseOrderId() == id);
+    public void delete(Integer purchaseOrderId) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
+            statement.setInt(1, purchaseOrderId);
+
+            statement.executeUpdate();
+
+            logger.info("Successfully deleted customer with ID " + purchaseOrderId);
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public List<Project> getAll() {
-        return new ArrayList<>(projects);
+        List<Project> purchaseOrderList = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Project purchaseOrder = new Project();
+                purchaseOrder.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
+                purchaseOrder.setPurchaseOrderName(resultSet.getString("purchaseorder_name"));
+                purchaseOrder.setBudget(resultSet.getInt("budget"));
+                purchaseOrder.setClosed(resultSet.getBoolean("status"));
+                purchaseOrderList.add(purchaseOrder);
+            }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
+        return purchaseOrderList;
     }
 }
