@@ -70,7 +70,7 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
             statement.setString(5, customer.getAddress());
 
             statement.executeUpdate();
-            logger.info("Successfully added contractor with ID " + contractor.getContractorId() + " to the database");
+            logger.info("Successfully added customer with ID " + customer.getCustomerName() + " to the database");
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
         }
