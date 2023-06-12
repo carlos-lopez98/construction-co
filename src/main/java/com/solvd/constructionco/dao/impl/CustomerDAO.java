@@ -2,7 +2,6 @@ package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.ICustomerDAO;
-import com.solvd.constructionco.models.Contractor;
 import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.util.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
