@@ -1,7 +1,6 @@
 package com.solvd.constructionco.models;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import javax.xml.bind.annotation.*;
 
@@ -13,7 +12,7 @@ public class Invoice {
     private int invoiceId;
 
     @XmlElement(name = "dueDate")
-    private java.sql.Date dueDate;
+    private Date dueDate;
 
     @XmlElement(name = "totalDue")
     private int totalDue;
@@ -40,11 +39,11 @@ public class Invoice {
         this.invoiceId = invoiceId;
     }
 
-    public java.sql.Date getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(java.sql.Date dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
