@@ -2,6 +2,8 @@ package com.solvd.constructionco.dao.impl;
 
 import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.IInvoiceDAO;
+import com.solvd.constructionco.models.Contractor;
+import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.models.Invoice;
 import com.solvd.constructionco.models.Project;
 import com.solvd.constructionco.util.ConnectionPool;
@@ -56,22 +58,45 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     @Override
     public Invoice getById(Integer invoiceId) {
         Invoice invoice = null;
-        //Try with resources auto closes connection
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, invoiceId);
 
-            //Try with resources - auto closes resultSet
             try (ResultSet resultSet = statement.executeQuery()) {
-
                 if (resultSet.next()) {
-                    invoice.setInvoiceId(resultSet.getInt("invoice_id"));
-                    invoice.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
-                    invoice.setCustomerId(resultSet.getInt("customer_id"));
-                    invoice.setContractorId(resultSet.getInt("contractor_id"));
-                    invoice.setDueDate(resultSet.getDate("due_date"));
-                    invoice.setTotalDue(resultSet.getInt("total_due"));
+                    invoice = new Invoice();
+                    invoice.setInvoiceId(resultSet.getInt("invoiceId"));
+                    invoice.setDueDate(resultSet.getDate("dueDate"));
+                    invoice.setTotalDue(resultSet.getInt("totalDue"));
 
+                    // Set the project object
+                    Project project = new Project();
+                    project.setPurchaseOrderId(resultSet.getInt("purchaseOrderId"));
+                    project.setPurchaseOrderName(resultSet.getString("purchaseOrderName"));
+                    project.setBudget(resultSet.getInt("budget"));
+                    project.setClosed(resultSet.getBoolean("status"));
+                    invoice.setProject(project);
+
+                    // Set the customer object
+                    Customer customer = new Customer();
+                    customer.setCustomerId(resultSet.getInt("customerId"));
+                    customer.setCustomerName(resultSet.getString("customerName"));
+                    customer.setEmail(resultSet.getString("email"));
+                    customer.setPhoneNumber(resultSet.getString("phoneNumber"));
+                    customer.setAddress(resultSet.getString("address"));
+                    invoice.setCustomer(customer);
+
+                    // Set the contractor object
+                    Contractor contractor = new Contractor();
+                    contractor.setContractorId(resultSet.getInt("contractorId"));
+                    contractor.setContractorName(resultSet.getString("contractorName"));
+                    contractor.setEmail(resultSet.getString("email"));
+                    contractor.setPhoneNumber(resultSet.getString("phoneNumber"));
+                    contractor.setAddress(resultSet.getString("address"));
+                    invoice.setContractor(contractor);
+
+                    logger.info("Invoice successfully retrieved");
                 }
             }
         } catch (SQLException e) {
@@ -86,14 +111,15 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
         //Try with Resources
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
-
+            // Set the parameter values
             statement.setInt(1, invoice.getInvoiceId());
-            statement.setInt(2, invoice.getPurchaseOrderId());
-            statement.setInt(3, invoice.getCustomerId());
-            statement.setInt(4, invoice.getContractorId());
-            statement.setDate(5,invoice.getDueDate());
-            statement.setInt(6,invoice.getTotalDue());
+            statement.setDate(2, new java.sql.Date(invoice.getDueDate().getTime()));
+            statement.setInt(3, invoice.getTotalDue());
+            statement.setInt(4, invoice.getProject().getPurchaseOrderId());
+            statement.setInt(5, invoice.getCustomer().getCustomerId());
+            statement.setInt(6, invoice.getContractor().getContractorId());
 
+            // Execute the query
             statement.executeUpdate();
             logger.info("Successfully added invoice order with ID " + invoice.getInvoiceId() + " to the database");
         } catch (SQLException e) {
@@ -103,17 +129,17 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
     @Override
     public void update(Invoice invoice) {
-        //Try with Resources
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+            // Set the parameter values
+            statement.setDate(1, new java.sql.Date(invoice.getDueDate().getTime()));
+            statement.setInt(2, invoice.getTotalDue());
+            statement.setInt(3, invoice.getProject().getPurchaseOrderId());
+            statement.setInt(4, invoice.getCustomer().getCustomerId());
+            statement.setInt(5, invoice.getContractor().getContractorId());
+            statement.setInt(6, invoice.getInvoiceId());
 
-            statement.setInt(1, invoice.getInvoiceId());
-            statement.setInt(2, invoice.getPurchaseOrderId());
-            statement.setInt(3, invoice.getCustomerId());
-            statement.setInt(4, invoice.getContractorId());
-            statement.setDate(5,invoice.getDueDate());
-            statement.setInt(6,invoice.getTotalDue());
-
+            // Execute the query
             statement.executeUpdate();
             logger.info("Successfully updated invoice order with ID " + invoice.getInvoiceId());
         } catch (SQLException e) {
@@ -125,8 +151,10 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     public void delete(Integer invoiceId) {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
+            // Set the parameter value
             statement.setInt(1, invoiceId);
 
+            // Execute the query
             statement.executeUpdate();
 
             logger.info("Successfully deleted invoice with ID " + invoiceId);
@@ -146,16 +174,25 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             while (resultSet.next()) {
                 Invoice invoice = new Invoice();
                 invoice.setInvoiceId(resultSet.getInt("invoice_id"));
-                invoice.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
-                invoice.setCustomerId(resultSet.getInt("customer_id"));
-                invoice.setContractorId(resultSet.getInt("contractor_id"));
-                invoice.setDueDate(resultSet.getDate("due_date"));
-                invoice.setTotalDue(resultSet.getInt("total_due"));
+
+                // Retrieve and set the customer object
+                Customer customer = new CustomerDAO().getById(resultSet.getInt("customer_id"));
+                invoice.setCustomer(customer);
+
+                // Retrieve and set the contractor object
+                Contractor contractor = new ContractorDAO().getById(resultSet.getInt("contractor_id"));
+                invoice.setContractor(contractor);
+
+                // Retrieve and set the project object
+                Project project = new ProjectDAO().getById(resultSet.getInt("purchase_order_id"));
+                invoice.setProject(project);
+
                 invoices.add(invoice);
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
         }
+
         return invoices;
     }
 }
