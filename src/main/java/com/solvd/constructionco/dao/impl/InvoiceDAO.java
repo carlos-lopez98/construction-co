@@ -20,10 +20,33 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private static final String GET_ALL_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
-    private static final String GET_BY_ID_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
-    private static final String SAVE_QUERY = "INSERT INTO invoices VALUES(?,?,?,?,?,?)";
+    private static final String GET_ALL_QUERY = "SELECT i.invoiceId, i.dueDate, i.totalDue, " +
+            "p.purchaseOrderId, p.purchaseOrderName, p.budget, p.isClosed, " +
+            "c.customerId, c.customerName, c.email, c.phoneNumber, c.address, " +
+            "co.contractorId, co.contractorName, co.email, co.phoneNumber, co.address " +
+            "FROM invoices AS i " +
+            "JOIN projects AS p ON i.projectId = p.projectId " +
+            "JOIN customers AS c ON i.customerId = c.customerId " +
+            "JOIN contractors AS co ON i.contractorId = co.contractorId";
+
+
+    private static final String GET_BY_ID_QUERY = "SELECT i.invoiceId, i.dueDate, i.totalDue, " +
+            "p.purchaseOrderId, p.purchaseOrderName, p.budget, p.isClosed, " +
+            "c.customerId, c.customerName, c.email, c.phoneNumber, c.address, " +
+            "co.contractorId, co.contractorName, co.email, co.phoneNumber, co.address " +
+            "FROM invoices AS i " +
+            "JOIN projects AS p ON i.projectId = p.projectId " +
+            "JOIN customers AS c ON i.customerId = c.customerId " +
+            "JOIN contractors AS co ON i.contractorId = co.contractorId " +
+            "WHERE i.invoiceId = ?";
+
+
+    private static final String SAVE_QUERY = "INSERT INTO invoices VALUES (?, ?, ?, ?, ?)";
+
+
     private static final String DELETE_QUERY = "DELETE FROM invoices WHERE invoice_id = ?";
+
+
     private static final String UPDATE_QUERY = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
 
     public InvoiceDAO() {

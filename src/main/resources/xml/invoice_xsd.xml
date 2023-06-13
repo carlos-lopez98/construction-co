@@ -5,8 +5,6 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="invoiceId" type="IdIntRestriction"/>
-                <xs:element name="customerId" type="IdIntRestriction"/>
-                <xs:element name="contractorId" type="IdIntRestriction"/>
                 <xs:element name="dueDate" type="xs:date"/>
                 <xs:element name="totalDue" type="xs:int"/>
                 <xs:element name="project" type="ProjectType"/>

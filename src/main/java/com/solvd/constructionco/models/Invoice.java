@@ -6,22 +6,38 @@ import java.time.LocalDate;
 public class Invoice {
 
     private int invoiceId;
-    private int purchaseOrderId;
-    private int customerId;
-    private int contractorId;
     private Date dueDate;
     private int totalDue;
+    private Customer customer;
+    private Contractor contractor;
+    private Project project;
 
     public Invoice(){
+    }
 
-    };
+    public Customer getCustomer() {
+        return customer;
+    }
 
-    public Invoice(int purchaseOrderId, int customerId, int contractorId){
-        this.purchaseOrderId = purchaseOrderId;
-        this.customerId = customerId;
-        this.contractorId = contractorId;
-    };
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
+    public Contractor getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public int getInvoiceId() {
         return invoiceId;
@@ -29,30 +45,6 @@ public class Invoice {
 
     public void setInvoiceId(int invoiceId) {
         this.invoiceId = invoiceId;
-    }
-
-    public int getPurchaseOrderId() {
-        return purchaseOrderId;
-    }
-
-    public void setPurchaseOrderId(int purchaseOrderId) {
-        this.purchaseOrderId = purchaseOrderId;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getContractorId() {
-        return contractorId;
-    }
-
-    public void setContractorId(int contractorId) {
-        this.contractorId = contractorId;
     }
 
     public Date getDueDate() {
