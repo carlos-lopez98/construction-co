@@ -1,5 +1,6 @@
 package com.solvd.constructionco.models;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Invoice {
@@ -8,7 +9,7 @@ public class Invoice {
     private int purchaseOrderId;
     private int customerId;
     private int contractorId;
-    private LocalDate dueDate;
+    private Date dueDate;
     private int totalDue;
 
     public Invoice(){
@@ -54,11 +55,11 @@ public class Invoice {
         this.contractorId = contractorId;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

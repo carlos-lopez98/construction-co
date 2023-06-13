@@ -1,14 +1,24 @@
 package com.solvd.constructionco.dao.impl;
 
+import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.IInvoiceDAO;
 import com.solvd.constructionco.models.Invoice;
+import com.solvd.constructionco.models.Project;
+import com.solvd.constructionco.util.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
-    private List<Invoice> invoices;
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     private static final String GET_ALL_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices";
     private static final String GET_BY_ID_QUERY = "SELECT invoice_id, purchase_order_id, customer_id, contractor_id, due_date, total_due FROM invoices WHERE invoice_id = ?";
@@ -17,46 +27,112 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     private static final String UPDATE_QUERY = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
 
     public InvoiceDAO() {
-        invoices = new ArrayList<>();
+
     }
 
     @Override
-    public Invoice getById(Integer id) {
-        for (Invoice invoice : invoices) {
-            if (invoice.getInvoiceId() == id) {
-                return invoice;
+    public Invoice getById(Integer invoiceId) {
+        Invoice invoice = null;
+        //Try with resources auto closes connection
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
+            statement.setInt(1, invoiceId);
+
+            //Try with resources - auto closes resultSet
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    invoice.setInvoiceId(resultSet.getInt("invoice_id"));
+                    invoice.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
+                    invoice.setCustomerId(resultSet.getInt("customer_id"));
+                    invoice.setContractorId(resultSet.getInt("contractor_id"));
+                    invoice.setDueDate(resultSet.getDate("due_date"));
+                    invoice.setTotalDue(resultSet.getInt("total_due"));
+
+                }
             }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
-        return null;
+
+        return invoice;
     }
 
     @Override
     public void save(Invoice invoice) {
-        invoices.add(invoice);
-    }
+        //Try with Resources
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
 
-    @Override
-    public void update(Invoice invoice) {
-        Invoice existingInvoice = getById(invoice.getInvoiceId());
-        if (existingInvoice != null) {
-            existingInvoice.setPurchaseOrderId(invoice.getPurchaseOrderId());
-            existingInvoice.setCustomerId(invoice.getCustomerId());
-            existingInvoice.setContractorId(invoice.getContractorId());
-            existingInvoice.setDueDate(invoice.getDueDate());
-            existingInvoice.setTotalDue(invoice.getTotalDue());
+            statement.setInt(1, invoice.getInvoiceId());
+            statement.setInt(2, invoice.getPurchaseOrderId());
+            statement.setInt(3, invoice.getCustomerId());
+            statement.setInt(4, invoice.getContractorId());
+            statement.setDate(5,invoice.getDueDate());
+            statement.setInt(6,invoice.getTotalDue());
+
+            statement.executeUpdate();
+            logger.info("Successfully added invoice order with ID " + invoice.getInvoiceId() + " to the database");
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
     }
 
     @Override
-    public void delete(Integer id) {
-        Invoice invoiceToRemove = getById(id);
-        if (invoiceToRemove != null) {
-            invoices.remove(invoiceToRemove);
+    public void update(Invoice invoice) {
+        //Try with Resources
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+
+            statement.setInt(1, invoice.getInvoiceId());
+            statement.setInt(2, invoice.getPurchaseOrderId());
+            statement.setInt(3, invoice.getCustomerId());
+            statement.setInt(4, invoice.getContractorId());
+            statement.setDate(5,invoice.getDueDate());
+            statement.setInt(6,invoice.getTotalDue());
+
+            statement.executeUpdate();
+            logger.info("Successfully updated invoice order with ID " + invoice.getInvoiceId());
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(Integer invoiceId) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
+            statement.setInt(1, invoiceId);
+
+            statement.executeUpdate();
+
+            logger.info("Successfully deleted invoice with ID " + invoiceId);
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
         }
     }
 
     @Override
     public List<Invoice> getAll() {
+        List<Invoice> invoices = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Invoice invoice = new Invoice();
+                invoice.setInvoiceId(resultSet.getInt("invoice_id"));
+                invoice.setPurchaseOrderId(resultSet.getInt("purchase_order_id"));
+                invoice.setCustomerId(resultSet.getInt("customer_id"));
+                invoice.setContractorId(resultSet.getInt("contractor_id"));
+                invoice.setDueDate(resultSet.getDate("due_date"));
+                invoice.setTotalDue(resultSet.getInt("total_due"));
+                invoices.add(invoice);
+            }
+        } catch (SQLException e) {
+            logger.info("SQL Exception Occurred: " + e.getMessage());
+        }
         return invoices;
     }
 }
