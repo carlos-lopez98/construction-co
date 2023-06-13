@@ -1,0 +1,25 @@
+<Invoice>
+    <invoiceId>123456789</invoiceId>
+    <dueDate>2023-06-12</dueDate>
+    <totalDue>100000</totalDue>
+    <project>
+        <purchaseOrderId>123456789</purchaseOrderId>
+        <purchaseOrderName>Project X</purchaseOrderName>
+        <budget>1000000</budget>
+        <isClosed>false</isClosed>
+    </project>
+    <customer>
+        <customerId>987654321</customerId>
+        <customerName>John Doe</customerName>
+        <email>johndoe@gmail.com</email>
+        <phoneNumber>123-456-7890</phoneNumber>
+        <address>123 Main St, City</address>
+    </customer>
+    <contractor>
+        <contractorId>543210987</contractorId>
+        <contractorName>ABC Contractors</contractorName>
+        <email>info@abccontractors.com</email>
+        <phoneNumber>555-123-4567</phoneNumber>
+        <address>456 Elm St, City</address>
+    </contractor>
+</Invoice>

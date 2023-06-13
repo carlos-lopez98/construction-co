@@ -14,7 +14,7 @@ import java.io.File;
 public class JAXBParser {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private static final String OUTPUT_JAXB = "src/main/resources/xml/ouput_jaxb.xml";
+    private static final String OUTPUT_JAXB = "src/main/resources/xml/output_jaxb.xml";
 
 
     public void marshall(Invoice invoice) {
