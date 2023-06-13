@@ -8,6 +8,7 @@ import com.solvd.constructionco.util.DOMValidator;
 import com.solvd.constructionco.util.parse.impl.DOMContractorParser;
 import com.solvd.constructionco.util.parse.impl.DOMEquipmentParser;
 import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
+import com.solvd.constructionco.util.parse.impl.JAXBParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,9 +19,19 @@ public class ParseAndValidationService {
     private static final DOMInvoiceParser invoiceParser = new DOMInvoiceParser();
     private static final DOMContractorParser contractorParser = new DOMContractorParser();
     private static final DOMEquipmentParser equipmentParser = new DOMEquipmentParser();
+    private static final JAXBParser jaxbParser = new JAXBParser();
 
     public ParseAndValidationService(){
     };
+
+    public Invoice unMarshallInvoice(String invoiceFilePath){
+        return jaxbParser.unmarshall(invoiceFilePath);
+    }
+
+    public Invoice marshallInvoice(Invoice invoice){
+        jaxbParser.marshall(invoice);
+        return invoice;
+    }
 
     public Contractor parseContractor(String contractorFilePath){
         return contractorParser.parse(contractorFilePath);

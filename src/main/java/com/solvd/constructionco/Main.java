@@ -19,7 +19,9 @@ public class Main {
     private static final String INVOICE_FILE_PATH = "src/main/resources/xml/invoice.xml";
     private static final String EQUIPMENT_FILE_PATH = "src/main/resources/xml/equipment.xml";
     private static final String CONTRACTOR_FILE_PATH = "src/main/resources/xml/contractor.xml";
+    private static final String INPUT_JAXB = "src/main/resources/xml/input_jaxb.xml";
     private static final ParseAndValidationService parseAndValidationService = new ParseAndValidationService();
+
 
 
     public static void main(String args[]){
@@ -28,9 +30,7 @@ public class Main {
         ConstructionDAO<Contractor, Integer> contractorDAO = new ContractorDAO();
         ConstructionDAO<Customer, Integer> customerDAO = new CustomerDAO();
         ConstructionDAO<Employee, Integer> employeeDAO = new EmployeeDAO();
-        ConstructionDAO<Equipment, Integer> equipmentDAO = new EquipmentDAO();
         ConstructionDAO<Invoice, Integer> invoiceDAO = new InvoiceDAO();
-        ConstructionDAO<Material, Integer> materialDAO = new MaterialDAO();
         ConstructionDAO<Project, Integer> projectDAO = new ProjectDAO();
         ConstructionDAO<Supplier, Integer> supplierDAO = new SupplierDAO();
         ConstructionDAO<Task, Integer> taskDao = new TaskDAO();
@@ -62,7 +62,7 @@ public class Main {
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
 */
 
-        //Parse to object
+        //Parse to object - DOM
         Contractor contractor = parseAndValidationService.parseContractor(CONTRACTOR_FILE_PATH);
         Invoice invoice = parseAndValidationService.parseInvoice(INVOICE_FILE_PATH);
         Equipment equipment = parseAndValidationService.parseEquipment(EQUIPMENT_FILE_PATH);
@@ -77,6 +77,12 @@ public class Main {
         if( parseAndValidationService.validateXML(EQUIPMENT_FILE_PATH,EQUIPMENT_XSD_PATH)){
             logger.info("Equipment File Validation was Successful");
         }
+
+        //Marhsall
+        Invoice invoiceJaxb = parseAndValidationService.unMarshallInvoice(INPUT_JAXB);
+
+        //UnMarshall
+        Invoice unMarshalledInvoice = parseAndValidationService.marshallInvoice(invoiceJaxb);
 
     }
 }

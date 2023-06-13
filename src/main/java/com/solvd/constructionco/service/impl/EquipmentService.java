@@ -1,3 +1,4 @@
+/*
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.models.Equipment;
@@ -38,3 +39,4 @@ public class EquipmentService implements IEquipmentService {
         return equipmentDAO.getAll();
     }
 }
+*/

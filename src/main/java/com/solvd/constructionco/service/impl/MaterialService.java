@@ -1,3 +1,4 @@
+/*
 package com.solvd.constructionco.service.impl;
 
 import com.solvd.constructionco.models.Material;
@@ -38,3 +39,4 @@ public class MaterialService implements IMaterialService {
         return materialDAO.getAll();
     }
 }
+*/

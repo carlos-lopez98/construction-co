@@ -4,49 +4,14 @@
     <xs:element name="Invoice">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="invoiceId" type="IdIntRestriction"/>
+                <xs:element name="invoiceId" type="xs:int"/>
+                <xs:element name="purchaseOrderId" type="xs:int"/>
+                <xs:element name="customerId" type="xs:int"/>
+                <xs:element name="contractorId" type="xs:int"/>
                 <xs:element name="dueDate" type="xs:date"/>
                 <xs:element name="totalDue" type="xs:int"/>
-                <xs:element name="project" type="ProjectType"/>
-                <xs:element name="customer" type="CustomerType"/>
-                <xs:element name="contractor" type="ContractorType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-    <xs:complexType name="ProjectType">
-        <xs:sequence>
-            <xs:element name="purchaseOrderId" type="IdIntRestriction"/>
-            <xs:element name="purchaseOrderName" type="xs:string"/>
-            <xs:element name="budget" type="IdIntRestriction"/>
-            <xs:element name="isClosed" type="xs:boolean"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerType">
-        <xs:sequence>
-            <xs:element name="customerId" type="IdIntRestriction"/>
-            <xs:element name="customerName" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="phoneNumber" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="ContractorType">
-        <xs:sequence>
-            <xs:element name="contractorId" type="IdIntRestriction"/>
-            <xs:element name="contractorName" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="phoneNumber" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:simpleType name="IdIntRestriction">
-        <xs:restriction base="xs:int">
-            <xs:minExclusive value="0"/>
-        </xs:restriction>
-    </xs:simpleType>
 
 </xs:schema>

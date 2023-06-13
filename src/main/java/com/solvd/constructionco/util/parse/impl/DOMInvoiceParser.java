@@ -41,7 +41,7 @@ public class DOMInvoiceParser implements iParser<Invoice> {
         Invoice invoice = new Invoice();
 
         Element invoiceElement = document.getDocumentElement();
-        invoice.setInvoiceId(Integer.parseInt(getElementValue(invoiceElement, "invoiceDate")));
+        invoice.setInvoiceId(Integer.parseInt(getElementValue(invoiceElement, "invoiceId")));
         invoice.setDueDate(Date.valueOf(getElementValue(invoiceElement, "dueDate")));
         invoice.setTotalDue(Integer.parseInt(getElementValue(invoiceElement, "totalDue")));
 
