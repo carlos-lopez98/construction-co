@@ -15,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class DOMInvoiceParser implements iParser<Invoice> {
@@ -40,11 +41,8 @@ public class DOMInvoiceParser implements iParser<Invoice> {
         Invoice invoice = new Invoice();
 
         Element invoiceElement = document.getDocumentElement();
-        invoice.setInvoiceId(Integer.parseInt(getElementValue(invoiceElement, "invoiceId")));
-        invoice.setPurchaseOrderId(Integer.parseInt(getElementValue(invoiceElement, "purchaseOrderId")));
-        invoice.setCustomerId(Integer.parseInt(getElementValue(invoiceElement, "customerId")));
-        invoice.setContractorId(Integer.parseInt(getElementValue(invoiceElement, "contractorId")));
-        invoice.setDueDate(LocalDate.parse(getElementValue(invoiceElement, "dueDate")));
+        invoice.setInvoiceId(Integer.parseInt(getElementValue(invoiceElement, "invoiceDate")));
+        invoice.setDueDate(Date.valueOf(getElementValue(invoiceElement, "dueDate")));
         invoice.setTotalDue(Integer.parseInt(getElementValue(invoiceElement, "totalDue")));
 
         return invoice;

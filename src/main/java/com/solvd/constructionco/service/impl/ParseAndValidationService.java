@@ -11,6 +11,7 @@ import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//Doesn't implement interface
 public class ParseAndValidationService {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
