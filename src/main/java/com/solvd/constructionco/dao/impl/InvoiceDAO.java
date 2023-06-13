@@ -20,25 +20,25 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private static final String GET_ALL_QUERY = "SELECT i.invoiceId, i.dueDate, i.totalDue, " +
-            "p.purchaseOrderId, p.purchaseOrderName, p.budget, p.isClosed, " +
-            "c.customerId, c.customerName, c.email, c.phoneNumber, c.address, " +
-            "co.contractorId, co.contractorName, co.email, co.phoneNumber, co.address " +
+    private static final String GET_ALL_QUERY = "SELECT i.invoice_id, i.due_date, i.total_due, " +
+            "p.purchase_order_id, p.purchaseorder_name, p.budget, p.status, " +
+            "c.customer_id, c.customer_name, c.email, c.phone_number, c.address, " +
+            "co.contractor_id, co.contractor_name, co.email, co.phone_number, co.address " +
             "FROM invoices AS i " +
-            "JOIN projects AS p ON i.projectId = p.projectId " +
-            "JOIN customers AS c ON i.customerId = c.customerId " +
-            "JOIN contractors AS co ON i.contractorId = co.contractorId";
+            "JOIN projects AS p ON i.purchase_order_id = p.purchase_order_id " +
+            "JOIN customers AS c ON i.customer_id = c.customer_id " +
+            "JOIN contractors AS co ON i.contractor_id = co.contractor_id";
 
 
-    private static final String GET_BY_ID_QUERY = "SELECT i.invoiceId, i.dueDate, i.totalDue, " +
-            "p.purchaseOrderId, p.purchaseOrderName, p.budget, p.isClosed, " +
-            "c.customerId, c.customerName, c.email, c.phoneNumber, c.address, " +
-            "co.contractorId, co.contractorName, co.email, co.phoneNumber, co.address " +
+    private static final String GET_BY_ID_QUERY = "SELECT i.invoice_id, i.due_date, i.total_due, " +
+            "p.purchase_order_id, p.purchaseorder_name, p.budget, p.status, " +
+            "c.customer_id, c.customer_name, c.email, c.phone_number, c.address, " +
+            "co.contractor_id, co.contractor_name, co.email, co.phone_number, co.address " +
             "FROM invoices AS i " +
-            "JOIN projects AS p ON i.projectId = p.projectId " +
-            "JOIN customers AS c ON i.customerId = c.customerId " +
-            "JOIN contractors AS co ON i.contractorId = co.contractorId " +
-            "WHERE i.invoiceId = ?";
+            "JOIN projects AS p ON i.purchase_order_id = p.purchase_order_id " +
+            "JOIN customers AS c ON i.customer_id = c.customer_id " +
+            "JOIN contractors AS co ON i.contractor_id = co.contractor_id " +
+            "WHERE i.invoice_id = ?";
 
 
     private static final String SAVE_QUERY = "INSERT INTO invoices VALUES (?, ?, ?, ?, ?)";
@@ -47,7 +47,7 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     private static final String DELETE_QUERY = "DELETE FROM invoices WHERE invoice_id = ?";
 
 
-    private static final String UPDATE_QUERY = "UPDATE invoices SET purchase_order_id = ?, customer_id = ?, contractor_id = ?, due_date = ?, total_due = ? WHERE invoice_id = ?";
+    private static final String UPDATE_QUERY = "UPDATE invoices SET due_date = ?, total_due = ?, purchase_order_id = ?, customer_id = ?, contractor_id = ? WHERE invoice_id = ?";
 
     public InvoiceDAO() {
 
