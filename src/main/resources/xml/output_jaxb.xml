@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Invoice>
+    <invoiceId>123456789</invoiceId>
+    <totalDue>100000</totalDue>
+    <customer>
+        <address>123 Main St, City</address>
+        <customerId>987654321</customerId>
+        <customerName>John Doe</customerName>
+        <email>johndoe@gmail.com</email>
+        <phoneNumber>123-456-7890</phoneNumber>
+    </customer>
+    <contractor>
+        <address>456 Elm St, City</address>
+        <contractorId>543210987</contractorId>
+        <contractorName>ABC Contractors</contractorName>
+        <email>info@abccontractors.com</email>
+        <phoneNumber>555-123-4567</phoneNumber>
+    </contractor>
+    <project>
+        <budget>1000000</budget>
+        <closed>false</closed>
+        <purchaseOrderId>123456789</purchaseOrderId>
+        <purchaseOrderName>Project X</purchaseOrderName>
+    </project>
+</Invoice>

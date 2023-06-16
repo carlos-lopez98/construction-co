@@ -2,6 +2,7 @@ package com.solvd.constructionco.models;
 
 public class Customer {
 
+    @JsonProperty
     private int customerId;
     private String customerName;
     private String email;

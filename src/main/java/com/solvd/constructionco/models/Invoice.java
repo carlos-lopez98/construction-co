@@ -1,8 +1,11 @@
 package com.solvd.constructionco.models;
 
+import com.solvd.constructionco.util.SQLDateConverter;
+
 import java.sql.Date;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement(name = "Invoice")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -12,6 +15,7 @@ public class Invoice {
     private int invoiceId;
 
     @XmlElement(name = "dueDate")
+    @XmlJavaTypeAdapter(SQLDateConverter.class)
     private Date dueDate;
 
     @XmlElement(name = "totalDue")
