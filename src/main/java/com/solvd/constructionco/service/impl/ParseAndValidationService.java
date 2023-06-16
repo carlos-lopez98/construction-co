@@ -4,7 +4,7 @@ import com.solvd.constructionco.Main;
 import com.solvd.constructionco.models.Contractor;
 import com.solvd.constructionco.models.Equipment;
 import com.solvd.constructionco.models.Invoice;
-import com.solvd.constructionco.util.DOMValidator;
+import com.solvd.constructionco.util.parse.DOMValidator;
 import com.solvd.constructionco.util.parse.impl.DOMContractorParser;
 import com.solvd.constructionco.util.parse.impl.DOMEquipmentParser;
 import com.solvd.constructionco.util.parse.impl.DOMInvoiceParser;
