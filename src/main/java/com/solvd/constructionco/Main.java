@@ -82,10 +82,10 @@ public class Main {
 
         //Deserialize JSON
         Customer jsonCustomer = constructionService.deserializeCustomerFromJsonFile(INPUT_JSON);
-        System.out.println("Customer Deserialized " + jsonCustomer.getCustomerName());
+        logger.info("Customer Deserialized " + jsonCustomer.getCustomerName());
 
         //Serialize JSON
         constructionService.serializeCustomerToJsonFile(jsonCustomer,OUTPUT_JSON);
-        System.out.println("Customer serialized " + jsonCustomer.getCustomerName());
+        logger.info("Customer serialized " + jsonCustomer.getCustomerName());
     }
 }
