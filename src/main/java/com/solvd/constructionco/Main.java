@@ -20,6 +20,8 @@ public class Main {
     private static final String EQUIPMENT_FILE_PATH = "src/main/resources/xml/equipment.xml";
     private static final String CONTRACTOR_FILE_PATH = "src/main/resources/xml/contractor.xml";
     private static final String INPUT_JAXB = "src/main/resources/xml/input_jaxb.xml";
+    private static final String INPUT_JSON = "src/main/resources/json/input_json.json";
+    private static final String OUTPUT_JSON = "src/main/resources/json/output_json.json";
     private static final ParseAndValidationService parseAndValidationService = new ParseAndValidationService();
 
 
@@ -45,22 +47,16 @@ public class Main {
         ConstructionServiceOperations<Project, Integer> projectService = new ProjectService((ProjectDAO) projectDAO);
         ConstructionServiceOperations<Supplier, Integer> supplierService = new SupplierService((SupplierDAO) supplierDAO);
         ConstructionServiceOperations<Task, Integer> taskService = new TaskService((TaskDAO) taskDao);*/
+        JSONParseService jsonParseService = new JSONParseService();
+
 
         //ADD to registry
-    /*    ServiceRegistry serviceRegistry = new ServiceRegistry();
-        serviceRegistry.registerService(contractorService);
-        serviceRegistry.registerService(customerService);
-        serviceRegistry.registerService(employeeService);
-        serviceRegistry.registerService(equipmentService);
-        serviceRegistry.registerService(invoiceService);
-        serviceRegistry.registerService(materialService);
-        serviceRegistry.registerService(projectService);
-        serviceRegistry.registerService(supplierService);
-        serviceRegistry.registerService(taskService);*/
+       ServiceRegistry serviceRegistry = new ServiceRegistry();
+        serviceRegistry.registerService(jsonParseService);
 
-/*
+
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
-*/
+
 
         //Parse to object - DOM
         Contractor contractor = parseAndValidationService.parseContractor(CONTRACTOR_FILE_PATH);
@@ -84,5 +80,12 @@ public class Main {
         //UnMarshall
         Invoice unMarshalledInvoice = parseAndValidationService.marshallInvoice(invoiceJaxb);
 
+        //Deserialize JSON
+        Customer jsonCustomer = constructionService.deserializeCustomerFromJsonFile(INPUT_JSON);
+        System.out.println("Customer Deserialized " + jsonCustomer.getCustomerName());
+
+        //Serialize JSON
+        constructionService.serializeCustomerToJsonFile(jsonCustomer,OUTPUT_JSON);
+        System.out.println("Customer serialized " + jsonCustomer.getCustomerName());
     }
 }
