@@ -2,7 +2,7 @@ package com.solvd.constructionco.util.parse.impl;
 
 import com.solvd.constructionco.Main;
 import com.solvd.constructionco.models.Contractor;
-import com.solvd.constructionco.util.parse.iParser;
+import com.solvd.constructionco.util.parse.IParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 
-public class DOMContractorParser implements iParser<Contractor> {
+public class DOMContractorParser implements IParser<Contractor> {
 
         private static final Logger logger = LogManager.getLogger(Main.class);
         private Document document;
