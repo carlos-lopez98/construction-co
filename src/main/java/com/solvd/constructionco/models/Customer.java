@@ -1,12 +1,22 @@
 package com.solvd.constructionco.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Customer {
 
-    @JsonProperty
+    @JsonProperty("customerId")
     private int customerId;
+
+    @JsonProperty("customerName")
     private String customerName;
+
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("phoneNumber")
     private String phoneNumber;
+
+    @JsonProperty("address")
     private String address;
 
     public Customer(){
