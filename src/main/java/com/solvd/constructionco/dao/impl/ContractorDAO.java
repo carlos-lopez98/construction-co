@@ -98,7 +98,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
 
     @Override
     public void delete(Integer contractorID) {
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, contractorID);
 
@@ -106,6 +107,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
             logger.info("Successfully deleted contractor with ID " + contractorID);
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
     }
 
