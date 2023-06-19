@@ -33,8 +33,10 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
     @Override
     public Project getById(Integer purchaseOrderId) {
         Project purchaseOrder = null;
-        //Try with resources auto closes connection
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, purchaseOrderId);
 
@@ -50,6 +52,8 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
 
         return purchaseOrder;
