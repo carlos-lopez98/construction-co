@@ -32,9 +32,9 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
     public Customer getById(Integer customerId) {
 
         Customer customer = null;
+        Connection connection = connectionPool.getConnection();
 
-        //Try with resources auto closes connection
-        try (Connection connection = connectionPool.getConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, customerId);
 
@@ -51,6 +51,8 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
 
         return customer;
