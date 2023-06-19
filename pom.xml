@@ -73,7 +73,14 @@
             <artifactId>javassist</artifactId>
             <version>3.25.0-GA</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.13</version>
+        </dependency
     </dependencies>
+
 
     <!--The compiler basically sets a java version so that it's consistent accross different machines-->
     <build>
