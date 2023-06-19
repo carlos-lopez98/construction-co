@@ -156,7 +156,10 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
     @Override
     public void delete(Integer invoiceId) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             // Set the parameter value
             statement.setInt(1, invoiceId);
@@ -167,6 +170,8 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             logger.info("Successfully deleted invoice with ID " + invoiceId);
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
