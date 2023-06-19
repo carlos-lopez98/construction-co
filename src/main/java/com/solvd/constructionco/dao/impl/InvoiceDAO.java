@@ -131,7 +131,10 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
     @Override
     public void update(Invoice invoice) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             // Set the parameter values
             statement.setDate(1, new java.sql.Date(invoice.getDueDate().getTime()));
@@ -146,6 +149,8 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             logger.info("Successfully updated invoice order with ID " + invoice.getInvoiceId());
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
