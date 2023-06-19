@@ -56,7 +56,9 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
 
     @Override
     public void save(Contractor contractor) {
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
             statement.setInt(1, contractor.getContractorId());
             statement.setString(2, contractor.getContractorName());
@@ -68,6 +70,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
             logger.info("Successfully added contractor with ID " + contractor.getContractorId() + " to the database");
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
     }
 
