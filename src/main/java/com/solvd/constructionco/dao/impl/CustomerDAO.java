@@ -60,8 +60,10 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
 
     @Override
     public void save(Customer customer) {
-        //Try with Resources
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
 
             statement.setInt(1, customer.getCustomerId());
@@ -74,6 +76,8 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
             logger.info("Successfully added customer with ID " + customer.getCustomerName() + " to the database");
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
     }
 
