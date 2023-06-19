@@ -27,8 +27,9 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     public Task getById(Integer taskId) {
         Task task = null;
 
-        //This auto closes the connection
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)
 
         ) {
@@ -48,6 +49,8 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
 
         return task;
