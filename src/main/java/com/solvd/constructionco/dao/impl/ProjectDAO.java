@@ -83,7 +83,10 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
 
     @Override
     public void update(Project project) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setInt(1, project.getPurchaseOrderId());
@@ -95,12 +98,17 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
             logger.info("Successfully updated project with ID " + project.getPurchaseOrderId());
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
     public void delete(Integer purchaseOrderId) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, purchaseOrderId);
 
@@ -109,6 +117,8 @@ public class ProjectDAO implements IProjectDAO<Project, Integer> {
             logger.info("Successfully deleted customer with ID " + purchaseOrderId);
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
