@@ -121,7 +121,9 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
     public List<Task> getAll() {
         List<Task> taskList = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -135,6 +137,8 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
 
         return taskList;
