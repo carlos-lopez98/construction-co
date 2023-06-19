@@ -105,7 +105,9 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
 
     @Override
     public void delete(Integer customerId) {
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, customerId);
 
@@ -113,6 +115,8 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
             logger.info("Successfully deleted customer with ID " + customerId);
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
