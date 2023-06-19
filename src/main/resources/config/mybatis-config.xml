@@ -1,0 +1,5 @@
+<mappers>
+    <mapper resource="src/main/resources/mappers/customermapper.xml" />
+    <mapper resource="src/main/resources/mappers/invoicemapper.xml" />
+    <mapper resource="src/main/resources/mappers/projectmapper.xml"/>
+</mappers>
