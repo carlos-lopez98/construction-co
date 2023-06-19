@@ -124,7 +124,9 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
     public List<Customer> getAll() {
         List<Customer> customerList = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -139,7 +141,10 @@ public class CustomerDAO implements ICustomerDAO<Customer, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
+
         return customerList;
     }
 }
