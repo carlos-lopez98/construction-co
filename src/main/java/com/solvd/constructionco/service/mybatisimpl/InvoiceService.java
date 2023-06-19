@@ -6,6 +6,8 @@ import com.solvd.constructionco.service.interfaces.IInvoiceService;
 import java.util.List;
 
 public class InvoiceService implements IInvoiceService {
+
+
     @Override
     public <T> T getById(Integer invoiceID) {
         return null;

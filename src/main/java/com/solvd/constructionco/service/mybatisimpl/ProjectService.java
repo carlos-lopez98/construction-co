@@ -6,6 +6,8 @@ import com.solvd.constructionco.service.interfaces.IProjectService;
 import java.util.List;
 
 public class ProjectService implements IProjectService {
+
+
     @Override
     public <T> T getById(Integer projectID) {
         return null;

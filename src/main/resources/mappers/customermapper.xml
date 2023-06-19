@@ -1,0 +1,41 @@
+<mapper namespace="com.solvd.constructionco.dao.impl.CustomerDAO">
+
+    <resultMap id="customerResultMap" type="com.solvd.constructionco.models.Customer">
+        <id property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <select id="getById" resultMap="customerResultMap" parameterType="java.lang.Integer">
+        SELECT customer_id, customer_name, email, phone_number, address
+        FROM customers
+        WHERE customer_id = #{customerId}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Customer">
+        INSERT INTO customers (customer_id, customer_name, email, phone_number, address)
+        VALUES (#{customerId}, #{customerName}, #{email}, #{phoneNumber}, #{address})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Customer">
+        UPDATE customers
+        SET customer_name = #{customerName},
+        email = #{email},
+        phone_number = #{phoneNumber},
+        address = #{address}
+        WHERE customer_id = #{customerId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM customers
+        WHERE customer_id = #{customerId}
+    </delete>
+
+    <select id="getAll" resultMap="customerResultMap">
+        SELECT customer_id, customer_name, email, phone_number, address
+        FROM customers
+    </select>
+
+</mapper>
