@@ -79,7 +79,10 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
 
     @Override
     public void update(Task task) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
@@ -91,6 +94,8 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
             logger.info("Successfully updated task with ID " + task.getTaskId());
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
