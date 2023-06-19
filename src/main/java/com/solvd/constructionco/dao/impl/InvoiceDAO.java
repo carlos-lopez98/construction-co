@@ -53,7 +53,9 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     public Invoice getById(Integer invoiceId) {
         Invoice invoice = null;
 
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, invoiceId);
 
@@ -95,6 +97,8 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
 
         return invoice;
