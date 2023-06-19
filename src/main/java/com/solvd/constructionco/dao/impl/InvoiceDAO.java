@@ -106,8 +106,10 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
 
     @Override
     public void save(Invoice invoice) {
-        //Try with Resources
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
             // Set the parameter values
             statement.setInt(1, invoice.getInvoiceId());
@@ -122,6 +124,8 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             logger.info("Successfully added invoice order with ID " + invoice.getInvoiceId() + " to the database");
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
