@@ -101,7 +101,10 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
 
     @Override
     public void delete(Integer id) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setInt(1, id);
 
@@ -109,6 +112,8 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
             logger.info("Successfully deleted task with ID " + id);
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
