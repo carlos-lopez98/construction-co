@@ -179,7 +179,9 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
     public List<Invoice> getAll() {
         List<Invoice> invoices = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -203,6 +205,8 @@ public class InvoiceDAO implements IInvoiceDAO<Invoice, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
 
         return invoices;
