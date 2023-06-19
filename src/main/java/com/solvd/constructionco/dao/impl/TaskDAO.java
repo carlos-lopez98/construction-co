@@ -58,7 +58,10 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
 
     @Override
     public void save(Task task) {
-        try (Connection connection = connectionPool.getConnection();
+
+        Connection connection = connectionPool.getConnection();
+
+        try (
              PreparedStatement statement = connection.prepareStatement(SAVE_QUERY)) {
             statement.setInt(1, task.getTaskId());
             statement.setString(2, task.getTaskName());
@@ -69,6 +72,8 @@ public class TaskDAO implements ITaskDAO<Task, Integer> {
             logger.info("Successfully added " + task.getTaskName() + " to database");
         } catch (SQLException e) {
             logger.info("SQL Exeption Occured" + e + e.getMessage());
+        }finally {
+            connectionPool.releaseConnection(connection);
         }
     }
 
