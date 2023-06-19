@@ -32,8 +32,9 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     public Contractor getById(Integer contractorID) {
         Contractor contractor = null;
 
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
+        Connection connection = connectionPool.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID_QUERY)) {
             statement.setInt(1, contractorID);
 
             ResultSet resultSet = statement.executeQuery();
@@ -46,6 +47,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        } finally{
+            connectionPool.releaseConnection(connection);
         }
 
         return contractor;
