@@ -115,8 +115,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
     @Override
     public List<Contractor> getAll() {
         List<Contractor> contractorList = new ArrayList<>();
-
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(GET_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -131,6 +131,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
             }
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
 
         return contractorList;
