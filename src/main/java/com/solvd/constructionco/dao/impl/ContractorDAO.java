@@ -77,7 +77,8 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
 
     @Override
     public void update(Contractor contractor) {
-        try (Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setString(1, contractor.getContractorName());
             statement.setString(2, contractor.getEmail());
@@ -89,7 +90,10 @@ public class ContractorDAO implements IContractorDAO<Contractor, Integer> {
             logger.info("Successfully updated contractor with ID " + contractor.getContractorId());
         } catch (SQLException e) {
             logger.info("SQL Exception Occurred: " + e.getMessage());
+        }finally{
+            connectionPool.releaseConnection(connection);
         }
+
     }
 
     @Override
