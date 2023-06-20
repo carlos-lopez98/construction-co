@@ -26,6 +26,8 @@ public class CustomerService implements ICustomerService {
     private static final String DELETE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.delete";
     private static final String GET_ALL = "com.solvd.constructionco.mybatis.impl.customermapper.getAll";
 
+
+
     @Override
     public Customer getById(Integer customerId) {
 

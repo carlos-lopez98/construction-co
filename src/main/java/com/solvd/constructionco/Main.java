@@ -1,12 +1,15 @@
 package com.solvd.constructionco;
 
-import com.solvd.constructionco.dao.impl.*;
 import com.solvd.constructionco.dao.ConstructionDAO;
+import com.solvd.constructionco.service.impl.JSONParseService;
+import com.solvd.constructionco.service.impl.ParseAndValidationService;
 import com.solvd.constructionco.service.interfaces.ConstructionServiceOperations;
 import com.solvd.constructionco.models.*;
 import com.solvd.constructionco.service.ConstructionService;
+import com.solvd.constructionco.service.mybatisimpl.CustomerService;
+import com.solvd.constructionco.service.mybatisimpl.ProjectService;
+import com.solvd.constructionco.service.mybatisimpl.TaskService;
 import com.solvd.constructionco.util.ServiceRegistry;
-import com.solvd.constructionco.service.impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,22 +31,20 @@ public class Main {
 
     public static void main(String args[]){
 
-        //Initialize all DAOs
-        ConstructionDAO<Contractor, Integer> contractorDAO = new ContractorDAO();
-        ConstructionDAO<Customer, Integer> customerDAO = new CustomerDAO();
-        ConstructionDAO<Employee, Integer> employeeDAO = new EmployeeDAO();
-        ConstructionDAO<Invoice, Integer> invoiceDAO = new InvoiceDAO();
-        ConstructionDAO<Project, Integer> projectDAO = new ProjectDAO();
-        ConstructionDAO<Supplier, Integer> supplierDAO = new SupplierDAO();
-        ConstructionDAO<Task, Integer> taskDao = new TaskDAO();
 
         //Initialize Services
         JSONParseService jsonParseService = new JSONParseService();
+        CustomerService customerService = new CustomerService();
+        TaskService taskService = new TaskService();
+        ProjectService projectService = new ProjectService();
 
 
         //ADD to registry
         ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerService(jsonParseService);
+        serviceRegistry.registerService(customerService);
+        serviceRegistry.registerService(taskService);
+        serviceRegistry.registerService(projectService);
 
 
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
