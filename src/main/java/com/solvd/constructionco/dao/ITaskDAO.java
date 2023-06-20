@@ -1,7 +1,5 @@
 package com.solvd.constructionco.dao;
 
-import com.solvd.constructionco.models.Task;
-
 import java.util.List;
 
 public interface ITaskDAO<Task, Integer> extends ConstructionDAO<Task, Integer>{
