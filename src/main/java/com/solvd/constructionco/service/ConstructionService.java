@@ -73,7 +73,7 @@ public class ConstructionService {
     }
 
     //Task Service
-    public Task getProjectById(Integer taskId){
+    public Task getTaskById(Integer taskId){
 
         Task task = null;
 
