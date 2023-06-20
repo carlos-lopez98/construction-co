@@ -38,7 +38,6 @@ public class Main {
         TaskService taskService = new TaskService();
         ProjectService projectService = new ProjectService();
 
-
         //ADD to registry
         ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerService(jsonParseService);

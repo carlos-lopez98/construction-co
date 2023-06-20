@@ -13,8 +13,6 @@ public class ConstructionService {
 
     private ServiceRegistry serviceRegistry;
 
-
-
     public ConstructionService(ServiceRegistry serviceRegistry){
         this.serviceRegistry = serviceRegistry;
     }
@@ -31,18 +29,18 @@ public class ConstructionService {
        return customer;
     }
 
-    //Customer Service
+    //Customer Operations
     public void getCustomerById(Integer customerId){
         CustomerService mybatisCustomerService = (CustomerService) serviceRegistry.getService(com.solvd.constructionco.service.mybatisimpl.CustomerService.class);
         if (mybatisCustomerService != null) {
-            // Perform operations using the MyBatis implementation
+            //MyBatis
             mybatisCustomerService.getById(customerId);
         }
 
-        CustomerService otherCustomerService = (CustomerService) serviceRegistry.getService(com.solvd.constructionco.service.impl.CustomerService.class);
-        if (otherCustomerService != null) {
-            // Perform operations using the other implementation
-            otherCustomerService.getById(customerId);
+        CustomerService customerService = (CustomerService) serviceRegistry.getService(com.solvd.constructionco.service.impl.CustomerService.class);
+        if (customerService != null) {
+            //Regular
+            customerService.getById(customerId);
         }
 
     }
@@ -63,7 +61,5 @@ public class ConstructionService {
         }
 
     }
-
-
 
 }
