@@ -1,6 +1,7 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
+import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.models.Project;
 import com.solvd.constructionco.service.interfaces.IProjectService;
 import org.apache.ibatis.io.Resources;
@@ -30,7 +31,20 @@ public class ProjectService implements IProjectService {
 
     @Override
     public Project getById(Integer projectId) {
-        return null;
+        Properties prop = this.retrieveProperties();
+        Project project = null;
+
+        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
+             SqlSession session = new SqlSessionFactoryBuilder().build(stream, prop).openSession();) {
+
+            project = session.selectOne(GET_BY_ID, projectId);
+
+            return project;
+        } catch (IOException e) {
+            logger.info("File Not Found");
+        }
+
+        return project;
     }
 
     @Override
@@ -39,11 +53,10 @@ public class ProjectService implements IProjectService {
 
         try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
              SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(SAVE_CUSTOMER, customer);
+            session.selectOne(SAVE_PROJECT, project);
             session.commit();
         } catch (IOException e) {
             logger.info("File Not Found");
-            throw new RuntimeException(e);
         }
 
     }
@@ -51,17 +64,51 @@ public class ProjectService implements IProjectService {
     @Override
     public void update(Project project) {
 
+        Properties properties = this.retrieveProperties();
+
+        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
+             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
+            session.selectOne(UPDATE_PROJECT, project);
+            session.commit();
+        } catch (IOException e) {
+            logger.info("File Not Found");
+        }
+
     }
 
     @Override
     public void delete(Integer projectId) {
 
+        Properties properties = this.retrieveProperties();
+
+        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
+             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
+            session.selectOne(DELETE_PROJECT, projectId);
+            session.commit();
+
+            logger.info("Succesfully deleted project with ID:" + projectId);
+        } catch (IOException e) {
+            logger.info("File Not Found");
+        }
+
     }
 
     @Override
     public List<Project> getAll() {
-        return null;
-    }
+        Properties properties = this.retrieveProperties();
+        List<Project> projects = null;
+
+        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
+             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
+            projects = session.selectList(GET_ALL);
+            session.commit();
+
+            logger.info("Succesfully retrieved all projects in database");
+        } catch (IOException e) {
+            logger.info("File Not Found");
+        }
+
+        return projects;    }
 
 
     private Properties retrieveProperties() {
