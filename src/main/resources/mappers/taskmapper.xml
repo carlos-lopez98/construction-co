@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.solvd.constructionco.mybatis.impl.TaskDAO">
+
+    <resultMap id="taskResultMap" type="com.solvd.constructionco.models.Task">
+        <id property="taskId" column="task_id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="closed" column="status"/>
+        <result property="dueDate" column="due_date"/>
+    </resultMap>
+
+    <select id="getById" resultMap="taskResultMap" parameterType="java.lang.Integer">
+        SELECT task_id, task_name, status, due_date
+        FROM tasks
+        WHERE task_id = #{taskId}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Task">
+        INSERT INTO tasks (task_id, task_name, status, due_date)
+        VALUES (#{taskId}, #{taskName}, #{closed}, #{dueDate})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Task">
+        UPDATE tasks
+        SET task_id = #{taskId},
+        task_name = #{taskName},
+        status = #{closed},
+        due_date = #{dueDate}
+        WHERE task_id = #{taskId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM tasks
+        WHERE task_id = #{taskId}
+    </delete>
+
+    <select id="getAll" resultMap="taskResultMap">
+        SELECT task_id, task_name, status, due_date
+        FROM tasks
+    </select>
+
+</mapper>

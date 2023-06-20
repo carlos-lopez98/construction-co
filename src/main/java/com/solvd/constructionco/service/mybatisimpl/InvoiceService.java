@@ -9,7 +9,7 @@ public class InvoiceService implements IInvoiceService {
 
 
     @Override
-    public <T> T getById(Integer invoiceID) {
+    public Invoice getById(Integer invoiceId) {
         return null;
     }
 
@@ -24,7 +24,7 @@ public class InvoiceService implements IInvoiceService {
     }
 
     @Override
-    public void delete(Integer invoiceID) {
+    public void delete(Integer invoiceId) {
 
     }
 
