@@ -21,10 +21,7 @@
 
     <update id="update" parameterType="com.solvd.constructionco.models.Task">
         UPDATE tasks
-        SET task_id = #{taskId},
-        task_name = #{taskName},
-        status = #{closed},
-        due_date = #{dueDate}
+        SET task_id = #{taskId}, task_name = #{taskName}, status = #{closed}, due_date = #{dueDate}
         WHERE task_id = #{taskId}
     </update>
 

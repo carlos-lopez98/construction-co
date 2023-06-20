@@ -23,10 +23,7 @@
 
     <update id="update" parameterType="com.solvd.constructionco.models.Customer">
         UPDATE customers
-        SET customer_name = #{customerName},
-        email = #{email},
-        phone_number = #{phoneNumber},
-        address = #{address}
+        SET customer_name = #{customerName}, email = #{email}, phone_number = #{phoneNumber}, address = #{address}
         WHERE customer_id = #{customerId}
     </update>
 

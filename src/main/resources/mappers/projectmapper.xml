@@ -22,10 +22,7 @@
 
     <update id="update" parameterType="com.solvd.constructionco.models.Project">
         UPDATE purchase_order
-        SET purchase_order_id = #{purchaseOrderId},
-        purchaseorder_name = #{purchaseOrderName},
-        budget = #{budget},
-        status = #{closed}
+        SET purchase_order_id = #{purchaseOrderId}, purchaseorder_name = #{purchaseOrderName}, budget = #{budget}, status = #{closed}
         WHERE purchase_order_id = #{purchaseOrderId}
     </update>
 
