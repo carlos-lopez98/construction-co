@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.util.PropertiesUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
