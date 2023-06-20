@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <mapper namespace="com.solvd.constructionco.mybatis.impl.customermapper">
 
     <resultMap id="customerResultMap" type="com.solvd.constructionco.models.Customer">

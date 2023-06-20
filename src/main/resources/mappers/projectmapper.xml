@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<mapper namespace="com.solvd.constructionco.dao.impl.ProjectDAO">
+
+    <resultMap id="projectResultMap" type="com.solvd.constructionco.models.Project">
+        <id property="purchaseOrderId" column="purchase_order_id"/>
+        <result property="purchaseOrderName" column="purchaseorder_name"/>
+        <result property="budget" column="budget"/>
+        <result property="closed" column="status"/>
+    </resultMap>
+
+    <select id="getById" resultType="com.solvd.constructionco.models.Project" parameterType="java.lang.Integer">
+        SELECT purchase_order_id, purchaseorder_name, budget, status
+        FROM purchase_order
+        WHERE purchase_order_id = #{purchaseOrderId}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Project">
+        INSERT INTO purchase_order (purchase_order_id, purchaseorder_name, budget, status)
+        VALUES (#{purchaseOrderId}, #{purchaseOrderName}, #{budget}, #{closed})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Project">
+        UPDATE purchase_order
+        SET purchase_order_id = #{purchaseOrderId},
+        purchaseorder_name = #{purchaseOrderName},
+        budget = #{budget},
+        status = #{closed}
+        WHERE purchase_order_id = #{purchaseOrderId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM purchase_order
+        WHERE purchase_order_id = #{purchaseOrderId}
+    </delete>
+
+    <select id="getAll" resultType="com.solvd.constructionco.models.Project">
+        SELECT purchase_order_id, purchaseorder_name, budget, status
+        FROM purchase_order
+    </select>
+
+</mapper>
