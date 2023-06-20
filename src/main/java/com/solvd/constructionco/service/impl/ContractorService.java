@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ContractorService implements IContractorService {
 
-    private ContractorDAO contractorDAO = new ContractorDAO();
+    private static final ContractorDAO contractorDAO = new ContractorDAO();
 
     public ContractorService() {
     }

@@ -28,4 +28,7 @@ public class ConstructionService {
        Customer customer = jsonParseService.deserializeCustomerFromJsonFile(readFilePath);
        return customer;
     }
+
+
+
 }

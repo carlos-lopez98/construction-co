@@ -8,10 +8,10 @@ import java.util.List;
 
 public class ProjectService implements IProjectService {
 
-    private ProjectDAO projectDAO;
+    private static final ProjectDAO projectDAO = new ProjectDAO();
 
-    public ProjectService(ProjectDAO projectDAO){
-        this.projectDAO = projectDAO;
+    public ProjectService(){
+
     }
 
     @Override

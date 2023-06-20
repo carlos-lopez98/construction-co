@@ -8,10 +8,10 @@ import java.util.List;
 
 public class TaskService implements ITaskService {
 
-    private TaskDAO taskDAO;
+    private static final TaskDAO taskDAO = new TaskDAO();
 
-    public TaskService(TaskDAO taskDAO){
-        this.taskDAO = taskDAO;
+    public TaskService( ){
+
     }
 
 

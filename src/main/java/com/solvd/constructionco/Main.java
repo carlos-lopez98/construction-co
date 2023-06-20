@@ -38,20 +38,11 @@ public class Main {
         ConstructionDAO<Task, Integer> taskDao = new TaskDAO();
 
         //Initialize Services
-      /*  ConstructionServiceOperations<Contractor, Integer> contractorService = new ContractorService((ContractorDAO) contractorDAO);
-        ConstructionServiceOperations<Customer, Integer> customerService = new CustomerService((CustomerDAO) customerDAO);
-        ConstructionServiceOperations<Employee, Integer> employeeService = new EmployeeService((EmployeeDAO) employeeDAO);
-        ConstructionServiceOperations<Equipment, Integer> equipmentService = new EquipmentService((EquipmentDAO) equipmentDAO);
-        ConstructionServiceOperations<Invoice, Integer> invoiceService = new InvoiceService((InvoiceDAO) invoiceDAO);
-        ConstructionServiceOperations<Material, Integer> materialService = new MaterialService((MaterialDAO) materialDAO);
-        ConstructionServiceOperations<Project, Integer> projectService = new ProjectService((ProjectDAO) projectDAO);
-        ConstructionServiceOperations<Supplier, Integer> supplierService = new SupplierService((SupplierDAO) supplierDAO);
-        ConstructionServiceOperations<Task, Integer> taskService = new TaskService((TaskDAO) taskDao);*/
         JSONParseService jsonParseService = new JSONParseService();
 
 
         //ADD to registry
-       ServiceRegistry serviceRegistry = new ServiceRegistry();
+        ServiceRegistry serviceRegistry = new ServiceRegistry();
         serviceRegistry.registerService(jsonParseService);
 
 

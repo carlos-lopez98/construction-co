@@ -8,11 +8,10 @@ import java.util.List;
 
 public class EmployeeService implements IEmployeeService {
 
-    private EmployeeDAO employeeDAO;
+    private static final EmployeeDAO employeeDAO = new EmployeeDAO();
 
-    public EmployeeService(EmployeeDAO employeeDAO){
+    public EmployeeService(){
 
-        this.employeeDAO = employeeDAO;
     }
 
 

@@ -8,10 +8,10 @@ import java.util.List;
 
 public class InvoiceService implements IInvoiceService {
 
-    private InvoiceDAO invoiceDAO;
+    private static final InvoiceDAO invoiceDAO = new InvoiceDAO();
 
-    public InvoiceService(InvoiceDAO invoiceDAO){
-        this.invoiceDAO = invoiceDAO;
+    public InvoiceService(){
+
     }
 
     @Override

@@ -9,10 +9,10 @@ import java.util.List;
 public class CustomerService implements ICustomerService {
 
 
-    private CustomerDAO customerDAO;
+    private static final CustomerDAO customerDAO = new CustomerDAO();
 
-    public CustomerService(CustomerDAO customerDAO){
-        this.customerDAO = customerDAO;
+    public CustomerService(){
+
     }
 
     @Override

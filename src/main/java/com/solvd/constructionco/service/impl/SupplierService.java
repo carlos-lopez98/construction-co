@@ -8,10 +8,10 @@ import java.util.List;
 
 public class SupplierService implements ISupplierService {
 
-    private SupplierDAO supplierDAO;
+    private static final SupplierDAO supplierDAO = new SupplierDAO();
 
-    public SupplierService(SupplierDAO supplierDAO) {
-        this.supplierDAO = supplierDAO;
+    public SupplierService( ) {
+
     }
 
     @Override
