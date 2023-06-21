@@ -46,27 +46,35 @@ public class TaskService implements ITaskDAO<Task, Integer> {
 
     @Override
     public void save(Task task) {
-        Properties properties = this.retrieveProperties();
+        if (task != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ITaskDAO taskDAO = session.getMapper(ITaskDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(SAVE_TASK, task);
+            taskDAO.save(task);
+
             session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+
+            logger.info("Succesfully saved task to database");
+        } else {
+            throw new NullPointerException("Task is null");
         }
     }
 
     @Override
     public void update(Task task) {
-        Properties properties = this.retrieveProperties();
+        if (task != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ITaskDAO taskDAO = session.getMapper(ITaskDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(UPDATE_TASK, task);
+            taskDAO.update(task);
+
             session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+
+            logger.info("Succesfully updated task in database");
+        } else {
+            throw new NullPointerException("Task is null");
         }
     }
 
