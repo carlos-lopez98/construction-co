@@ -45,9 +45,7 @@ public class Main {
         serviceRegistry.registerService(taskService);
         serviceRegistry.registerService(projectService);
 
-
         ConstructionService constructionService = new ConstructionService(serviceRegistry);
-
 
         //Parse to object - DOM
         Contractor contractor = parseAndValidationService.parseContractor(CONTRACTOR_FILE_PATH);

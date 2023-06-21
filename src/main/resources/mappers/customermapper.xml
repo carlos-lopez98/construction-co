@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mapper namespace="com.solvd.constructionco.mybatis.impl.customermapper">
+<mapper namespace="com.solvd.constructionco.dao.ICustomerDAO">
 
     <resultMap id="customerResultMap" type="com.solvd.constructionco.models.Customer">
         <id property="customerId" column="customer_id"/>

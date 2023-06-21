@@ -1,8 +1,11 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
+import com.solvd.constructionco.dao.ICustomerDAO;
+import com.solvd.constructionco.dao.impl.CustomerDAO;
 import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.service.interfaces.ICustomerService;
+import com.solvd.constructionco.util.SQLSessionUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -19,7 +22,7 @@ import java.util.Properties;
 public class CustomerService implements ICustomerService {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private static final String BATIS_CONFIG = "src/main/resources/config/mybatis-config.xml";
+    private static final SQLSessionUtil sessionUtil = new SQLSessionUtil();
     private static final String SAVE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.save";
     private static final String GET_BY_ID = "com.solvd.constructionco.mybatis.impl.customermapper.getById";
     private static final String UPDATE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.update";
@@ -27,24 +30,16 @@ public class CustomerService implements ICustomerService {
     private static final String GET_ALL = "com.solvd.constructionco.mybatis.impl.customermapper.getAll";
 
 
-
     @Override
     public Customer getById(Integer customerId) {
-
-            Properties prop = this.retrieveProperties();
+        if(customerId > 0){
             Customer customer = null;
-
-            try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-                 SqlSession session = new SqlSessionFactoryBuilder().build(stream, prop).openSession();) {
-
-                customer = session.selectOne(GET_BY_ID, customerId);
-
-                return customer;
-            } catch (IOException e) {
-                logger.info("File Not Found");
-            }
-
-        return customer;
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            customer = session.getMapper(CustomerDAO.class).getById(customerId);
+            return customer;
+        }else{
+            throw new RuntimeException("Invalid CustomerId Entered");
+        }
     }
 
     @Override
@@ -122,7 +117,7 @@ public class CustomerService implements ICustomerService {
         Properties properties = new Properties();
         try (FileInputStream fis = new FileInputStream("src/main/resources/database.properties")) {
             properties.load(fis);
-            return  properties;
+            return properties;
         } catch (FileNotFoundException e) {
             logger.info("File not found" + e);
         } catch (IOException e) {
