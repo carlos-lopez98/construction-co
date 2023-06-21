@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.solvd.constructionco.dao.IEmployeeDAO">
+
+    <resultMap id="employeeResultMap" type="com.solvd.constructionco.models.Employee">
+        <id property="employeeId" column="employee_id"/>
+        <result property="employeeName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="position" column="position"/>
+    </resultMap>
+
+    <select id="getById" resultMap="employeeResultMap" parameterType="java.lang.Integer">
+        SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position
+        FROM employees
+        WHERE employee_id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Employee">
+        INSERT INTO employees (employee_id, first_name, last_name, email, phone_number, hire_date, position)
+        VALUES (#{employeeId}, #{employeeName}, #{lastName}, #{email}, #{phoneNumber}, #{hireDate}, #{position})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Employee">
+        UPDATE employees
+        SET first_name = #{employeeName}, last_name = #{lastName}, email = #{email},
+        phone_number = #{phoneNumber}, hire_date = #{hireDate}, position = #{position}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM employees
+        WHERE employee_id = #{id}
+    </delete>
+
+    <select id="getAll" resultMap="employeeResultMap">
+        SELECT employee_id, first_name, last_name, email, phone_number, hire_date, position
+        FROM employees
+    </select>
+
+</mapper>

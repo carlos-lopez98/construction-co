@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.solvd.constructionco.dao.ISupplierDAO">
+
+    <resultMap id="supplierResultMap" type="com.solvd.constructionco.models.Supplier">
+        <id property="supplierId" column="supplier_id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="getById" resultMap="supplierResultMap" parameterType="java.lang.Integer">
+        SELECT supplier_id, supplier_name, email
+        FROM suppliers
+        WHERE supplier_id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Supplier">
+        INSERT INTO suppliers (supplier_id, supplier_name, email)
+        VALUES (#{supplierId}, #{supplierName}, #{email})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Supplier">
+        UPDATE suppliers
+        SET supplier_name = #{supplierName}, email = #{email}
+        WHERE supplier_id = #{supplierId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM suppliers
+        WHERE supplier_id = #{id}
+    </delete>
+
+    <select id="getAll" resultMap="supplierResultMap">
+        SELECT supplier_id, supplier_name, email
+        FROM suppliers
+    </select>
+
+</mapper>

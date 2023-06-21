@@ -1,9 +1,7 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
-import com.solvd.constructionco.dao.ICustomerDAO;
 import com.solvd.constructionco.dao.ISupplierDAO;
-import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.models.Supplier;
 import com.solvd.constructionco.service.interfaces.ISupplierService;
 import com.solvd.constructionco.util.SQLSessionUtil;
