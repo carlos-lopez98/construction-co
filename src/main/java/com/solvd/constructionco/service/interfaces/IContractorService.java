@@ -4,7 +4,7 @@ import com.solvd.constructionco.models.Contractor;
 
 import java.util.List;
 
-public interface IContractorService extends ConstructionServiceOperations<Contractor, Integer>{
+public interface IContractorService<Contractor, Integer> extends ConstructionServiceOperations<Contractor, Integer>{
 
     @Override
     <T> T getById(Integer contractorID);

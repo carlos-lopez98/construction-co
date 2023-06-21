@@ -1,24 +1,14 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
-import com.solvd.constructionco.dao.IProjectDAO;
 import com.solvd.constructionco.dao.ITaskDAO;
-import com.solvd.constructionco.models.Customer;
-import com.solvd.constructionco.models.Project;
 import com.solvd.constructionco.models.Task;
 import com.solvd.constructionco.util.SQLSessionUtil;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 
 public class TaskService implements ITaskDAO<Task, Integer> {
 

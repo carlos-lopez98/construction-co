@@ -9,7 +9,7 @@ import java.util.List;
 
 //Do the validation/ input data null checks in here
 
-public class ContractorService implements IContractorService {
+public class ContractorService implements IContractorService<Contractor, Integer> {
 
     private static final ContractorDAO contractorDAO = new ContractorDAO();
 
