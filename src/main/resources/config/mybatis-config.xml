@@ -25,5 +25,6 @@
         <mapper resource="src/main/resources/mappers/projectmapper.xml"/>
         <mapper resource="src/main/resources/mappers/suppliermapper.xml"/>
         <mapper resource="src/main/resources/mappers/taskmapper.xml"/>
+        <mapper resource="src/main/resources/mappers/employeemapper.xml"/>
     </mappers>
 </configuration>
