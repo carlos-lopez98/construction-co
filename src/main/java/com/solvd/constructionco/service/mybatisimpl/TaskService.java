@@ -80,46 +80,37 @@ public class TaskService implements ITaskDAO<Task, Integer> {
 
     @Override
     public void delete(Integer taskId) {
-        Properties properties = this.retrieveProperties();
-
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(DELETE_TASK, taskId);
-            session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
+        if (taskId > 0) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ITaskDAO taskDAO = session.getMapper(ITaskDAO.class);
+            Task task = (Task) taskDAO.getById(taskId);
+            if (task != null) {
+                taskDAO.delete(taskId);
+                session.commit();
+                session.close();
+                logger.info("Succesfully deleted task from database");
+            } else {
+                throw new RuntimeException("taskId is not in database");
+            }
+        } else {
+            throw new RuntimeException("TaskId given is not a valid ID");
         }
     }
 
     @Override
     public List<Task> getAll() {
 
-        Properties properties = this.retrieveProperties();
-        List<Task> tasks = null;
+        SqlSession session = sessionUtil.retrieveSqlSession();
+        ITaskDAO taskDAO = session.getMapper(ITaskDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            tasks = session.selectList(GET_ALL);
+        List<Task> tasks = taskDAO.getAll();
+
+        if (tasks.isEmpty()) {
+            throw new RuntimeException("No tasks in Database");
+        } else {
             session.commit();
-
-            logger.info("Succesfully retrieved all tasks in database");
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+            return tasks;
         }
-
-        return tasks;
-    }
-
-    private Properties retrieveProperties() {
-        Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/resources/database.properties")) {
-            properties.load(fis);
-            return  properties;
-        } catch (FileNotFoundException e) {
-            logger.info("File not found" + e);
-        } catch (IOException e) {
-            logger.info("Input Output Exception Occured" + e);
-        }
-        return properties;
     }
 }
