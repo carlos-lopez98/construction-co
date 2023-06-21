@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace="com.solvd.constructionco.mybatis.impl.TaskDAO">
+<mapper namespace="com.solvd.constructionco.dao.ITaskDAO">
 
     <resultMap id="taskResultMap" type="com.solvd.constructionco.models.Task">
         <id property="taskId" column="task_id"/>

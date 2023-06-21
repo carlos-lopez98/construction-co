@@ -1,9 +1,12 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
+import com.solvd.constructionco.dao.IProjectDAO;
 import com.solvd.constructionco.dao.ITaskDAO;
 import com.solvd.constructionco.models.Customer;
+import com.solvd.constructionco.models.Project;
 import com.solvd.constructionco.models.Task;
+import com.solvd.constructionco.util.SQLSessionUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -20,29 +23,25 @@ import java.util.Properties;
 public class TaskService implements ITaskDAO<Task, Integer> {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private static final String BATIS_CONFIG = "src/main/resources/config/mybatis-config.xml";
-    private static final String SAVE_TASK = "com.solvd.constructionco.mybatis.impl.taskmapper.save";
-    private static final String GET_BY_ID = "com.solvd.constructionco.mybatis.impl.taskmapper.getById";
-    private static final String UPDATE_TASK = "com.solvd.constructionco.mybatis.impl.taskmapper.update";
-    private static final String DELETE_TASK = "com.solvd.constructionco.mybatis.impl.taskmapper.delete";
-    private static final String GET_ALL = "com.solvd.constructionco.mybatis.impl.taskmapper.getAll";
+    private static final SQLSessionUtil sessionUtil = new SQLSessionUtil();
 
     @Override
     public Task getById(Integer taskId) {
-        Properties prop = this.retrieveProperties();
-        Task task = null;
+        if (taskId > 0) {
+            Task task = null;
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, prop).openSession();) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ITaskDAO taskDAO = session.getMapper(ITaskDAO.class);
+            task = (Task) taskDAO.getById(taskId);
 
-            task = session.selectOne(GET_BY_ID, taskId);
-
+            //Commits and closes
+            //Until session.commit is closed changes are not persisted to the database
+            session.commit();
+            session.close();
             return task;
-        } catch (IOException e) {
-            logger.info("File Not Found");
+        } else {
+            throw new RuntimeException("Invalid TaskId entered");
         }
-
-        return task;
     }
 
     @Override
