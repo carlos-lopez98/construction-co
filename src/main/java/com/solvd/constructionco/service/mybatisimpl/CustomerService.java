@@ -24,7 +24,6 @@ public class CustomerService implements ICustomerService {
     private static final Logger logger = LogManager.getLogger(Main.class);
     private static final SQLSessionUtil sessionUtil = new SQLSessionUtil();
     private static final String SAVE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.save";
-    private static final String GET_BY_ID = "com.solvd.constructionco.mybatis.impl.customermapper.getById";
     private static final String UPDATE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.update";
     private static final String DELETE_CUSTOMER = "com.solvd.constructionco.mybatis.impl.customermapper.delete";
     private static final String GET_ALL = "com.solvd.constructionco.mybatis.impl.customermapper.getAll";
@@ -32,44 +31,57 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer getById(Integer customerId) {
-        if(customerId > 0){
+        if (customerId > 0) {
             Customer customer = null;
+
             SqlSession session = sessionUtil.retrieveSqlSession();
-            customer = session.getMapper(CustomerDAO.class).getById(customerId);
+            ICustomerDAO customerDAO = session.getMapper(ICustomerDAO.class);
+            customer = (Customer) customerDAO.getById(customerId);
+
+            //Commits and closes
+            //Until session.commit is closed changes are not persisted to the database
+            session.commit();
+            session.close();
             return customer;
-        }else{
+        } else {
             throw new RuntimeException("Invalid CustomerId Entered");
         }
     }
 
     @Override
     public void save(Customer customer) {
-        Properties properties = this.retrieveProperties();
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(SAVE_CUSTOMER, customer);
+
+        if (customer != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ICustomerDAO customerDAO = session.getMapper(ICustomerDAO.class);
+
+            customerDAO.save(customer);
+
             session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
-            throw new RuntimeException(e);
+            session.close();
+
+            logger.info("Succesfully saved customer to database");
+        } else {
+            throw new NullPointerException("Customer is null");
         }
     }
 
     @Override
     public void update(Customer customer) {
 
-        Properties properties = this.retrieveProperties();
+        if (customer != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ICustomerDAO customerDAO = session.getMapper(ICustomerDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(UPDATE_CUSTOMER, customer);
+            customerDAO.update(customer);
+
             session.commit();
+            session.close();
 
-            logger.info("Succesfully updated Customer " + customer.getCustomerName());
-        } catch (IOException e) {
-            logger.info("File Not Found");
-            throw new RuntimeException(e);
+            logger.info("Succesfully updated customer to database");
+        } else {
+            throw new NullPointerException("Customer is null");
         }
 
     }
