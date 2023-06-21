@@ -46,14 +46,18 @@ public class ProjectService implements IProjectService {
 
     @Override
     public void save(Project project) {
-        Properties properties = this.retrieveProperties();
+        if (project != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            IProjectDAO projectDAO = session.getMapper(IProjectDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(SAVE_PROJECT, project);
+            projectDAO.save(project);
+
             session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+
+            logger.info("Succesfully saved project to database");
+        } else {
+            throw new NullPointerException("Project is null");
         }
 
     }
