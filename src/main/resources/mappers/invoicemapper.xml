@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.solvd.constructionco.dao.IInvoiceDAO">
+
+    <resultMap id="invoiceResultMap" type="com.solvd.constructionco.models.Invoice">
+        <id property="invoiceId" column="invoice_id"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="totalDue" column="total_due"/>
+
+        <!-- Project -->
+        <association property="project" javaType="com.solvd.constructionco.models.Project">
+            <id property="purchaseOrderId" column="purchase_order_id"/>
+            <result property="purchaseOrderName" column="purchaseorder_name"/>
+            <result property="budget" column="budget"/>
+            <result property="status" column="status"/>
+        </association>
+
+        <!-- Customer -->
+        <association property="customer" javaType="com.solvd.constructionco.models.Customer">
+            <id property="customerId" column="customer_id"/>
+            <result property="customerName" column="customer_name"/>
+            <result property="email" column="email"/>
+            <result property="phoneNumber" column="phone_number"/>
+            <result property="address" column="address"/>
+        </association>
+
+        <!-- Contractor -->
+        <association property="contractor" javaType="com.solvd.constructionco.models.Contractor">
+            <id property="contractorId" column="contractor_id"/>
+            <result property="contractorName" column="contractor_name"/>
+            <result property="email" column="email"/>
+            <result property="phoneNumber" column="phone_number"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+
+    <select id="getById" resultMap="invoiceResultMap" parameterType="java.lang.Integer">
+        SELECT i.invoice_id, i.due_date, i.total_due, p.purchase_order_id, p.purchaseorder_name, p.budget, p.status, c.customer_id, c.customer_name, c.email, c.phone_number, c.address, co.contractor_id, co.contractor_name, co.email, co.phone_number, co.address
+        FROM invoices AS i
+        JOIN projects AS p ON i.purchase_order_id = p.purchase_order_id
+        JOIN customers AS c ON i.customer_id = c.customer_id
+        JOIN contractors AS co ON i.contractor_id = co.contractor_id
+        WHERE i.invoice_id = #{invoiceId}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Invoice">
+        INSERT INTO invoices (invoice_id, due_date, total_due, purchase_order_id, customer_id, contractor_id)
+        VALUES (#{invoiceId}, #{dueDate}, #{totalDue}, #{project.purchaseOrderId}, #{customer.customerId}, #{contractor.contractorId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Invoice">
+        UPDATE invoices
+        SET due_date = #{dueDate}, total_due = #{totalDue}, purchase_order_id = #{project.purchaseOrderId},
+        customer_id = #{customer.customerId}, contractor_id = #{contractor.contractorId}
+        WHERE invoice_id = #{invoiceId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM invoices
+        WHERE invoice_id = #{invoiceId}
+    </delete>
+
+    <select id="getAll" resultMap="invoiceResultMap">
+        SELECT i.invoice_id, i.due_date, i.total_due, p.purchase_order_id, p.purchaseorder_name, p.budget, p.status, c.customer_id, c.customer_name, c.email, c.phone_number, c.address, co.contractor_id, co.contractor_name, co.email, co.phone_number, co.address
+        FROM invoices AS i
+        JOIN projects AS p ON i.purchase_order_id = p.purchase_order_id
+        JOIN customers AS c ON i.customer_id = c.customer_id
+        JOIN contractors AS co ON i.contractor_id = co.contractor_id
+    </select>
+
+</mapper>
