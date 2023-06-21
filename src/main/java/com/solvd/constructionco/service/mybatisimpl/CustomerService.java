@@ -81,7 +81,7 @@ public class CustomerService implements ICustomerService {
                 customerDAO.delete(customerId);
                 session.commit();
                 session.close();
-                logger.info("Succesfully updated customer to database");
+                logger.info("Succesfully deleted customer from database");
             } else {
                 throw new RuntimeException("CustomerId is not in database");
             }

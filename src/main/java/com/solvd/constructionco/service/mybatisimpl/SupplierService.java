@@ -28,7 +28,6 @@ public class SupplierService implements ISupplierService {
             supplier = (Supplier) supplierDAO.getById(supplierID);
 
             //Commits and closes
-            //Until session.commit is closed changes are not persisted to the database
             session.commit();
             session.close();
             return supplier;
@@ -39,21 +38,70 @@ public class SupplierService implements ISupplierService {
 
     @Override
     public void save(Supplier supplier) {
+        if (supplier != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ISupplierDAO supplierDAO = session.getMapper(ISupplierDAO.class);
 
+            supplierDAO.save(supplier);
+
+            session.commit();
+            session.close();
+
+            logger.info("Succesfully saved supplier to database");
+        } else {
+            throw new NullPointerException("Supplier Entered is null");
+        }
     }
 
     @Override
     public void update(Supplier supplier) {
+        if (supplier != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ISupplierDAO supplierDAO = session.getMapper(ISupplierDAO.class);
 
+            supplierDAO.update(supplier);
+
+            session.commit();
+            session.close();
+
+            logger.info("Succesfully saved supplier to database");
+        } else {
+            throw new NullPointerException("Supplier Entered is null");
+        }
     }
 
     @Override
     public void delete(Integer supplierID) {
-
+        if (supplierID > 0) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ISupplierDAO supplierDAO = session.getMapper(ISupplierDAO.class);
+            Supplier supplier = (Supplier) supplierDAO.getById(supplierID);
+            if (supplier != null) {
+                supplierDAO.delete(supplierID);
+                session.commit();
+                session.close();
+                logger.info("Succesfully deleted supplier from database");
+            } else {
+                throw new RuntimeException("SupplierID is not in database");
+            }
+        } else {
+            throw new RuntimeException("SupplierID given is not valid");
+        }
     }
 
     @Override
     public List<Supplier> getAll() {
-        return null;
+        SqlSession session = sessionUtil.retrieveSqlSession();
+        ISupplierDAO supplierDAO = session.getMapper(ISupplierDAO.class);
+
+        List<Supplier> suppliers = supplierDAO.getAll();
+
+        if (suppliers.isEmpty()) {
+            throw new RuntimeException("No suppliers in Database");
+        } else {
+            session.commit();
+            session.close();
+            return suppliers;
+        }
     }
 }
