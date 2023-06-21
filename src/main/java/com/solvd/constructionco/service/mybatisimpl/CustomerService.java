@@ -69,7 +69,6 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void update(Customer customer) {
-
         if (customer != null) {
             SqlSession session = sessionUtil.retrieveSqlSession();
             ICustomerDAO customerDAO = session.getMapper(ICustomerDAO.class);
@@ -83,23 +82,25 @@ public class CustomerService implements ICustomerService {
         } else {
             throw new NullPointerException("Customer is null");
         }
-
     }
 
     @Override
     public void delete(Integer customerId) {
 
-        Properties properties = this.retrieveProperties();
-
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(DELETE_CUSTOMER, customerId);
-            session.commit();
-
-            logger.info("Succesfully deleted customer with ID:" + customerId);
-        } catch (IOException e) {
-            logger.info("File Not Found");
-            throw new RuntimeException(e);
+        if (customerId > 0) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            ICustomerDAO customerDAO = session.getMapper(ICustomerDAO.class);
+            Customer customer = (Customer) customerDAO.getById(customerId);
+            if(customer != null){
+                customerDAO.delete(customerId);
+                session.commit();
+                session.close();
+                logger.info("Succesfully updated customer to database");
+            }else{
+                throw new RuntimeException("CustomerId is not in database");
+            }
+        } else {
+            throw new RuntimeException("CustomerId given is not correct");
         }
 
     }
