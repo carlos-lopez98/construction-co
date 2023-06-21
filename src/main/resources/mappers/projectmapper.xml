@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mapper namespace="com.solvd.constructionco.mybatis.impl.ProjectDAO">
+<mapper namespace="com.solvd.constructionco.dao.IProjectDAO">
 
     <resultMap id="projectResultMap" type="com.solvd.constructionco.models.Project">
         <id property="purchaseOrderId" column="purchase_order_id"/>

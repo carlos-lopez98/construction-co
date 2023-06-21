@@ -1,9 +1,12 @@
 package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
+import com.solvd.constructionco.dao.ICustomerDAO;
+import com.solvd.constructionco.dao.IProjectDAO;
 import com.solvd.constructionco.models.Customer;
 import com.solvd.constructionco.models.Project;
 import com.solvd.constructionco.service.interfaces.IProjectService;
+import com.solvd.constructionco.util.SQLSessionUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -20,31 +23,25 @@ import java.util.Properties;
 public class ProjectService implements IProjectService {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-
-    private static final String BATIS_CONFIG = "src/main/resources/config/mybatis-config.xml";
-    private static final String SAVE_PROJECT = "com.solvd.constructionco.mybatis.impl.customermapper.save";
-    private static final String GET_BY_ID = "com.solvd.constructionco.mybatis.impl.customermapper.getById";
-    private static final String UPDATE_PROJECT = "com.solvd.constructionco.mybatis.impl.customermapper.update";
-    private static final String DELETE_PROJECT = "com.solvd.constructionco.mybatis.impl.customermapper.delete";
-    private static final String GET_ALL = "com.solvd.constructionco.mybatis.impl.customermapper.getAll";
-
+    private static final SQLSessionUtil sessionUtil = new SQLSessionUtil();
 
     @Override
     public Project getById(Integer projectId) {
-        Properties prop = this.retrieveProperties();
-        Project project = null;
+        if (projectId > 0) {
+            Project project = null;
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, prop).openSession();) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            IProjectDAO projectDAO = session.getMapper(IProjectDAO.class);
+            project = (Project) projectDAO.getById(projectId);
 
-            project = session.selectOne(GET_BY_ID, projectId);
-
+            //Commits and closes
+            //Until session.commit is closed changes are not persisted to the database
+            session.commit();
+            session.close();
             return project;
-        } catch (IOException e) {
-            logger.info("File Not Found");
+        } else {
+            throw new RuntimeException("Invalid ProjectId Entered");
         }
-
-        return project;
     }
 
     @Override
