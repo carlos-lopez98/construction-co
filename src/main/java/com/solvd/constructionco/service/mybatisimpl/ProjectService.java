@@ -64,15 +64,18 @@ public class ProjectService implements IProjectService {
 
     @Override
     public void update(Project project) {
+        if (project != null) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            IProjectDAO projectDAO = session.getMapper(IProjectDAO.class);
 
-        Properties properties = this.retrieveProperties();
+            projectDAO.update(project);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(UPDATE_PROJECT, project);
             session.commit();
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+
+            logger.info("Succesfully updated project in database");
+        } else {
+            throw new NullPointerException("Project is null");
         }
 
     }
@@ -80,48 +83,37 @@ public class ProjectService implements IProjectService {
     @Override
     public void delete(Integer projectId) {
 
-        Properties properties = this.retrieveProperties();
-
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            session.selectOne(DELETE_PROJECT, projectId);
-            session.commit();
-
-            logger.info("Succesfully deleted project with ID:" + projectId);
-        } catch (IOException e) {
-            logger.info("File Not Found");
+        if (projectId > 0) {
+            SqlSession session = sessionUtil.retrieveSqlSession();
+            IProjectDAO projectDAO = session.getMapper(IProjectDAO.class);
+            Project project = (Project) projectDAO.getById(projectId);
+            if (project != null) {
+                projectDAO.delete(projectId);
+                session.commit();
+                session.close();
+                logger.info("Succesfully deleted project to database");
+            } else {
+                throw new RuntimeException("projectId is not in database");
+            }
+        } else {
+            throw new RuntimeException("ProjectId given is not a valid ID");
         }
 
     }
 
     @Override
     public List<Project> getAll() {
-        Properties properties = this.retrieveProperties();
-        List<Project> projects = null;
+        SqlSession session = sessionUtil.retrieveSqlSession();
+        IProjectDAO projectDAO = session.getMapper(IProjectDAO.class);
 
-        try (InputStream stream = Resources.getResourceAsStream(BATIS_CONFIG);
-             SqlSession session = new SqlSessionFactoryBuilder().build(stream, properties).openSession();) {
-            projects = session.selectList(GET_ALL);
+        List<Project> projects = projectDAO.getAll();
+
+        if (projects.isEmpty()) {
+            throw new RuntimeException("No projects in Database");
+        } else {
             session.commit();
-
-            logger.info("Succesfully retrieved all projects in database");
-        } catch (IOException e) {
-            logger.info("File Not Found");
+            session.close();
+            return projects;
         }
-
-        return projects;    }
-
-
-    private Properties retrieveProperties() {
-        Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/resources/database.properties")) {
-            properties.load(fis);
-            return  properties;
-        } catch (FileNotFoundException e) {
-            logger.info("File not found" + e);
-        } catch (IOException e) {
-            logger.info("Input Output Exception Occured" + e);
-        }
-        return properties;
     }
 }

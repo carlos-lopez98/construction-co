@@ -102,7 +102,6 @@ public class CustomerService implements ICustomerService {
         } else {
             session.commit();
             session.close();
-            logger.info("Succesfully updated customer to database");
             return customers;
         }
     }
