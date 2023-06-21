@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.solvd.constructionco.dao.IContractorDAO">
+
+    <resultMap id="contractorResultMap" type="com.solvd.constructionco.models.Contractor">
+        <id property="contractorId" column="contractor_id"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <select id="getById" resultMap="contractorResultMap" parameterType="java.lang.Integer">
+        SELECT contractor_id, contractor_name, email, phone_number, address
+        FROM contractors
+        WHERE contractor_id = #{contractorId}
+    </select>
+
+    <insert id="save" parameterType="com.solvd.constructionco.models.Contractor">
+        INSERT INTO contractors (contractor_id, contractor_name, email, phone_number, address)
+        VALUES (#{contractorId}, #{contractorName}, #{email}, #{phoneNumber}, #{address})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.constructionco.models.Contractor">
+        UPDATE contractors
+        SET contractor_name = #{contractorName}, email = #{email}, phone_number = #{phoneNumber}, address = #{address}
+        WHERE contractor_id = #{contractorId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM contractors
+        WHERE contractor_id = #{contractorId}
+    </delete>
+
+    <select id="getAll" resultMap="contractorResultMap">
+        SELECT contractor_id, contractor_name, email, phone_number, address
+        FROM contractors
+    </select>
+
+</mapper>
