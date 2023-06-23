@@ -16,7 +16,19 @@ public class SupplierService implements ISupplierService {
 
     @Override
     public Supplier getById(Integer supplierID) {
-        return supplierDAO.getById(supplierID);
+
+        if(supplierID == null || supplierID < 0){
+
+            throw new IllegalArgumentException("SupplierId is not in correct formate");
+        }
+
+        Supplier supplier = supplierDAO.getById(supplierID);
+
+        if(supplier == null){
+            throw new RuntimeException("Supplier is not inside of database");
+        }
+
+        return supplier;
     }
 
     @Override
