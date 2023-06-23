@@ -17,7 +17,18 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee getById(Integer employeeID) {
-        return employeeDAO.getById(employeeID);
+
+        if(employeeID == null || employeeID < 0){
+            throw new IllegalArgumentException("EmployeeId provided is not correct format");
+        }
+
+        Employee employee = employeeDAO.getById(employeeID);
+
+        if(employee == null){
+            throw new RuntimeException("Employee is not in the database");
+        }
+
+        return employee;
     }
 
     @Override
