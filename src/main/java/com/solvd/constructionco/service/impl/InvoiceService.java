@@ -17,9 +17,19 @@ public class InvoiceService implements IInvoiceService {
     @Override
     public Invoice getById(Integer invoiceID) {
 
+        if(invoiceID == null || invoiceID < 0){
 
+            throw new IllegalArgumentException("InvoiceId provided is not correct format");
 
-        return invoiceDAO.getById(invoiceID);
+        }
+
+        Invoice invoice = invoiceDAO.getById(invoiceID);
+
+        if(invoice == null){
+            throw new RuntimeException("Invoice is not in database");
+        }
+
+        return invoice;
     }
 
     @Override
