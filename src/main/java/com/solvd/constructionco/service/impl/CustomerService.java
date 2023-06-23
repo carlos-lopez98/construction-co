@@ -16,8 +16,21 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer getById(Integer integer) {
-        return customerDAO.getById(integer);
+    public Customer getById(Integer customerId) {
+
+        if(customerId == null || customerId < 0){
+            throw new IllegalArgumentException("The customerId provided is in incorrect format");
+        }
+
+        Customer customer = customerDAO.getById(customerId);
+
+        if(customer == null){
+            throw new RuntimeException("Customer is not in database");
+        }
+
+        return customer;
+
+
     }
 
     @Override

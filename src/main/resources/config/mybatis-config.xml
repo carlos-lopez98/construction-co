@@ -21,6 +21,7 @@
 
     <mappers>
         <mapper resource="src/main/resources/mappers/customermapper.xml" />
+        <mapper resource="src/main/resources/mappers/contractormapper.xml" />
         <mapper resource="src/main/resources/mappers/invoicemapper.xml" />
         <mapper resource="src/main/resources/mappers/projectmapper.xml"/>
         <mapper resource="src/main/resources/mappers/suppliermapper.xml"/>

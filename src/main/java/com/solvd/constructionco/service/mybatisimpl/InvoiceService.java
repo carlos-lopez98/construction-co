@@ -2,7 +2,6 @@ package com.solvd.constructionco.service.mybatisimpl;
 
 import com.solvd.constructionco.Main;
 import com.solvd.constructionco.dao.*;
-import com.solvd.constructionco.models.Employee;
 import com.solvd.constructionco.models.Invoice;
 import com.solvd.constructionco.service.interfaces.IInvoiceService;
 import com.solvd.constructionco.util.SQLSessionUtil;
