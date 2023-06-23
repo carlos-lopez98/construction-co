@@ -16,7 +16,18 @@ public class ProjectService implements IProjectService {
 
     @Override
     public Project getById(Integer purchaseOrderID) {
-        return projectDAO.getById(purchaseOrderID);
+
+        if(purchaseOrderID == null || purchaseOrderID < 0){
+            throw new IllegalArgumentException("PurchaseOrderId provided is not in correct format");
+        }
+
+        Project project = projectDAO.getById(purchaseOrderID);
+
+        if (project == null){
+            throw new RuntimeException("Project is not in database");
+        }
+
+        return project;
     }
 
     @Override
