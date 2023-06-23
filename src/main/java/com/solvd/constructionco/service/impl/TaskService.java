@@ -17,7 +17,18 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task getById(Integer taskID) {
-        return taskDAO.getById(taskID);
+
+        if (taskID == null || taskID < 0){
+            throw new IllegalArgumentException("TaskId is not in correct format");
+        }
+
+        Task task = taskDAO.getById(taskID);
+
+        if(task == null){
+            throw new RuntimeException("Task is not in database");
+        }
+
+        return task;
     }
 
     @Override
